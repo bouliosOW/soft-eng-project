@@ -6,4 +6,3 @@ def index(request):
 
 def about(request):
     return HttpResponse("GrooveGuesser is a song guessing game.")
-
