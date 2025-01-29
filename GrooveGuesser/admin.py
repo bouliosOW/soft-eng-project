@@ -29,12 +29,21 @@ admin.site.register(Account, AccountAdmin)
     database with a shared admin account. I am looking into a way to do this, but we can discuss this in/after class
     on Thursday.
 
+    NOTICE that this problem will apply to all information stored in the database. Anything not
+    preset will not be saved, even with migrations. 
+
+    TO ENSURE ALL MIGRATIONS ARE ADDED, USE:
+        python manage.py migrate
+    AFTER EVERY PULL TO ENSURE ALL OF OUR DATABASES WILL HAVE THE SAME TABLES, FIELDS, ETC.
+    THIS WILL NOT POPULATE TABLES WITH DATA, BUT IT WILL ENSURE 
+    THAT ALL TABLES ARE SAME FOR ALL PARTNERS IN THIS PROJECT
+
 
     ADDITIONALLY,
 
     If you are having any troubles with the database, models, or the admin page's use of them,
     then you may be having problems with migrations.
     See the comment in \grooveguesser\models.py for help
-    
+
 '''
 
