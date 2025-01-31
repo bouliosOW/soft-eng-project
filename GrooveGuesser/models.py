@@ -2,13 +2,17 @@ from django.db import models
 
 # Create your models here.
 
-class Account(models.Model):
-    username = models.CharField(max_length=15)
-    password = models.CharField(max_length=20)
-    join_date = models.DateTimeField("Join Date")
+# class Account(models.Model):
+#     username = models.CharField(max_length=15)
+#     password = models.CharField(max_length=20)
+#     join_date = models.DateTimeField("Join Date")
 
-    def __str__(self):
-        return "User " + self.username
+#     def __str__(self):
+#         return "User " + self.username
+
+
+# class Leaderboard(models.Model):
+#     player = models.ForeignKey(Account, on_delete=models.CASCADE)
     
 '''
     IMPORTANT! -----------------------
