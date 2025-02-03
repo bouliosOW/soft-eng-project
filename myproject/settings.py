@@ -127,3 +127,8 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+SPOTIFY_CLIENT_ID = 'db3c06cdb81d494c9e232cebdfd1de06'
+SPOTIFY_CLIENT_SECRET = '05553b7772b04f04b672f39c991b744a'
+
