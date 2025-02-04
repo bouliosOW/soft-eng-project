@@ -27,5 +27,8 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('grooveguesser.urls')),
+
+    path('', include('grooveguesser.urls')), #for all grooveguesser URLS
+
+    path('user/', include('user.urls')) #for user urls
 ]
