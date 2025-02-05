@@ -1,20 +1,15 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About</title>
-    <link rel="stylesheet" href="{% static 'css/style.css'%}">
-</head>
-<body>
-    <h1>About</h1>
-    <p>GrooveGuesser is currently in development for a Software Engineering class
-      at Florida Southern College. The current developers are listed as follows:
-        Adam Boulos,
-        Matt Flammenspeck,
-        Patrick Fratus,
-        Colsen Hernandez, and
-        Anderson Morris.</p>
-</body>
-</html>
+
+  <h1>About</h1>
+  <p>GrooveGuesser is currently in development for a Software Engineering class
+    at Florida Southern College. The current developers are listed as follows:
+    Adam Boulos,
+    Matt Flammenspeck,
+    Patrick Fratus,
+    Colsen Hernandez, and
+    Anderson Morris.
+  </p>
+  
+{% endblock content %}
