@@ -12,15 +12,16 @@ from . import forms
 def users(request):
     template_data = {}
     template_data['title'] = 'Sign Up'
+    form = forms.SignUpForm()
     return render(request, 'user/users.html', {
-        'template_data': template_data
+        'template_data': template_data,
+        'form': form
     })
 
 def login(request):
     template_data = {}
     template_data['title'] = 'Log In'
-    form = forms.SignUpForm()
-    return render(request, 'user/login.html', { form: form }, {
+    return render(request, 'user/login.html', {
         'template_data': template_data
     })
 
@@ -30,9 +31,9 @@ def get_new_user(request):
 
         if form.is_valid():
             # UPDATE DATABASE HERE
-            return HttpResponseRedirect('login')
+            return HttpResponseRedirect('/login')
     
-    else:
+    else: 
         form = SignUpForm()
-    
+
     return render(request, 'users.html', {'form': form})

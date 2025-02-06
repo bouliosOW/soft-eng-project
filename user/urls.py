@@ -2,7 +2,7 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.users),
+    path('', views.users, name="user.signup"),
     path("login", views.login, name="user.login"),
     # path('about', include('grooveguesser.urls')),
     # This is causing errors, some kind of infinite loop relating to the routes?
