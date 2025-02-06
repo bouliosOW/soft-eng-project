@@ -5,7 +5,7 @@ from django.db import models
 class Account(models.Model):
     username = models.CharField(max_length=15)
     password = models.CharField(max_length=20)
-    join_date = models.DateTimeField("Join Date")
+    join_date = models.DateTimeField("Join Date", auto_now_add=True)
 
     def __str__(self):
         return "User " + self.username
@@ -15,6 +15,15 @@ class Leaderboard(models.Model):
     player = models.ForeignKey(Account, on_delete=models.CASCADE)
 
 
+'''
+    {% for account in accounts %}
+            <p>Username: {{ account.username }}</p>
+            <p>Password: {{ account.password }}</p>
+            <p>Joined: {{ account.join_date }}</p>
+        {% endfor %}
+
+        was used in login for testing, now am working on some things
+'''
 
     
 '''

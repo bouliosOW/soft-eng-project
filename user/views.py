@@ -1,11 +1,12 @@
 import random
 import os
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import requests
 import json
 from .forms import SignUpForm
 from django.http import HttpResponseRedirect
 from . import forms
+from .models import Account
 
 
 
@@ -21,6 +22,7 @@ def users(request):
 def login(request):
     template_data = {}
     template_data['title'] = 'Log In'
+    
     return render(request, 'user/login.html', {
         'template_data': template_data
     })
@@ -31,9 +33,19 @@ def get_new_user(request):
 
         if form.is_valid():
             # UPDATE DATABASE HERE
-            return HttpResponseRedirect('/login')
+            Account.objects.create(username = form.cleaned_data["username"], password = form.cleaned_data["password"])
+            return redirect('/login')
     
     else: 
         form = SignUpForm()
 
     return render(request, 'users.html', {'form': form})
+
+def log_into_account(request):
+    pass
+
+def seeAccounts(request):
+    accounts = Account.objects.all
+    return render(request, "user/login.html", {
+        'accounts': accounts
+    })

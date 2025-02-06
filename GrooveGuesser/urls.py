@@ -5,7 +5,7 @@ urlpatterns = [
     #grooveguesser test app
     path('', views.index, name="index"),
     path('about', views.about, name="about"),
-    path('game/', views.get_random_song, name='game'),
+    path('game/', views.game, name='game'),
     path('user/', include('user.urls'))
 
     #user registration app

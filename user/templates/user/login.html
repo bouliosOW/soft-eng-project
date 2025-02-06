@@ -7,6 +7,12 @@
         This is the login page for GrooveGuesser. <br>
         If you do not yet have an account, then head to the sign up page.
         <a href="{% url 'user.signup' %}">Return to Sign Up Page</a>
+
+        {% for account in accounts %}
+            <p>Username: {{ account.username }}</p>
+            <p>Password: {{ account.password }}</p>
+            <p>Joined: {{ account.join_date }}</p>
+        {% endfor %}
     </p>
 
     
