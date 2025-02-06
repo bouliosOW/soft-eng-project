@@ -22,17 +22,13 @@ def about(request):
         'template_data': template_data
     })
 
-def get_random_song():
-    """Fetch a random song preview URL and its metadata."""
-    playlist_id = "37i9dQZF1DXcBWIGoYBM5M"  # Top 50 Global Playlist
-    tracks = sp.playlist_tracks(playlist_id)["items"]
-    
-    random_track = random.choice(tracks)
-    song_name = random_track["track"]["name"]
-    artist = random_track["track"]["artists"][0]["name"]
-    preview_url = random_track["track"]["preview_url"]
+def game(request):
+    template_data = {}
+    template_data['title'] = "Game"
+    return render(request, 'game.html', {
+        'template_data': template_data
+    })
 
-    return {"song_name": song_name, "artist": artist, "preview_url": preview_url}
 
     
 
