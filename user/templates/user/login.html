@@ -1,17 +1,14 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GrooveGuesser</title>
-    <link rel="stylesheet" href="{% static 'css/style.css'%}">
-</head>
-<body>
+
     <h1>LOGIN</h1>
     <p>
         This is the login page for GrooveGuesser. <br>
         If you do not yet have an account, then head to the sign up page.
+        <a href="{% url 'user.signup' %}">Return to Sign Up Page</a>
     </p>
-</body>
-</html>
+
+    
+
+{% endblock content %}
