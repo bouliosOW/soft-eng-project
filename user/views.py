@@ -22,10 +22,13 @@ def users(request):
 def login(request):
     template_data = {}
     template_data['title'] = 'Log In'
-    
+    accounts = Account.objects.all
     return render(request, 'user/login.html', {
-        'template_data': template_data
+        'template_data': template_data,
+        'accounts': accounts
     })
+
+# The form isn't working to create new Account records. Must fix
 
 def get_new_user(request):
     if request.method == 'POST':
@@ -40,12 +43,3 @@ def get_new_user(request):
         form = SignUpForm()
 
     return render(request, 'users.html', {'form': form})
-
-def log_into_account(request):
-    pass
-
-def seeAccounts(request):
-    accounts = Account.objects.all
-    return render(request, "user/login.html", {
-        'accounts': accounts
-    })
