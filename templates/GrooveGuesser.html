@@ -3,6 +3,11 @@
 {% load static %}
 
     <h1 id="GrooveTitle">Groove Guesser</h1>
+    <img
+        class="banner"
+        src="{{ post.banner.url }}"
+        {% comment %} alt="{{ post.title }}" {% endcomment %} 
+        />
     <p>Welcome to GrooveGuesser, a randomly generated song guessing game! More about GrooveGuesser <a href="/about">here</a> </p>
     <p>If you want to log into your account, or to create a new account, click <a href="user">here</a></p>
 

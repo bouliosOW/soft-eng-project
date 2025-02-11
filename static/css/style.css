@@ -34,3 +34,9 @@ h1, p {
     z-index: 1000; /* Ensures it stays above other elements */
     white-space: nowrap; /* Prevents breaking on small screens */
 }
+
+.banner {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+}
