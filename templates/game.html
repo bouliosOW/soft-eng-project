@@ -2,7 +2,26 @@
 {% block content %}
 {% load static %}
 
-    <h1>Groove Guesser</h1>
-    <p>Guess the song!</p>
+    <h1 style="color: #61302b;">Groove Guesser</h1>
+    <p style="color: #61302b;">Guess the song!</p>
+
+    {% if video_details %}
+    <h2>{{ video_details.title }}</h2>
+    <p>{{ video_details.description }}</p>
+{% else %}
+    <p style="color: red;">No video details found. Check API response.</p>
+{% endif %}
+
+{% if video_id %}
+    <iframe width="560" height="315"
+            src="https://www.youtube.com/embed/{{ video_id }}"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+    </iframe>
+{% else %}
+    <p style="color: red;">No video ID found.</p>
+{% endif %}
 
 {% endblock content %}
