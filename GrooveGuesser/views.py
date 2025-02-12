@@ -2,15 +2,11 @@ from django.shortcuts import render
 # from django.contrib.auth.forms import UserCreationForm #registration (WIP PF)
 from django.http import HttpResponse,JsonResponse
 import random
-<<<<<<< HEAD
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from django.conf import settings
 from googleapiclient.discovery import build
 from django.shortcuts import render
-=======
-
->>>>>>> 682fb06cde0574ac085ee0d4758d5a60f48df21c
 
 #grooveguesser test responses
 def index(request):
@@ -36,18 +32,7 @@ def game(request):
         'template_data': template_data
     })
 
-<<<<<<< HEAD
 def get_video_details(video_id):
-=======
-def leaderboard(request):
-    template_data = {}
-    template_data['title'] = "Leaderboard"
-    return render(request, 'leaderboard.html', {
-        'template_data': template_data
-    })
-    
-
->>>>>>> 682fb06cde0574ac085ee0d4758d5a60f48df21c
 
     youtube = build("youtube", "v3", developerKey=settings.YOUTUBE_API_KEY)
     
@@ -67,3 +52,10 @@ def game(request):
     print("Video Details:", video_details)
 
     return render(request, 'game.html', {"video_id": video_id, "video_details": video_details})
+
+def leaderboard(request):
+    template_data = {}
+    template_data['title'] = "Leaderboard"
+    return render(request, 'leaderboard.html', {
+        'template_data': template_data
+    })
