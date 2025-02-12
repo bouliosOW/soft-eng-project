@@ -22,7 +22,7 @@ def users(request):
 def login(request):
     template_data = {}
     template_data['title'] = 'Log In'
-    accounts = Account.objects.all
+    accounts = Account.objects.all()
     return render(request, 'user/login.html', {
         'template_data': template_data,
         'accounts': accounts
@@ -31,15 +31,24 @@ def login(request):
 # The form isn't working to create new Account records. Must fix
 
 def get_new_user(request):
+    #print("Arrived:", "at view get_new_user")
     if request.method == 'POST':
         form = SignUpForm(request.POST)
 
         if form.is_valid():
+            #print("crash:", "out")
             # UPDATE DATABASE HERE
             Account.objects.create(username = form.cleaned_data["username"], password = form.cleaned_data["password"])
-            return redirect('/login')
+            return redirect('user.login')
+        else:
+            print("Form errors:", form.errors)  # Debugging
+            return redirect('user.signup')  # Redirect back on failure
     
-    else: 
-        form = SignUpForm()
+    # else: 
+    #     #print("super:", "Crash out")
+    #     form = SignUpForm()
 
+    
     return render(request, 'users.html', {'form': form})
+
+

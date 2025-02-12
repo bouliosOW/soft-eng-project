@@ -1,9 +1,10 @@
 from django.db import models
+from django.forms import ModelForm
 
 # Create your models here.
 
 class Account(models.Model):
-    username = models.CharField(max_length=15)
+    username = models.CharField(max_length=15, unique=True)
     password = models.CharField(max_length=20)
     join_date = models.DateTimeField("Join Date", auto_now_add=True)
 
@@ -14,6 +15,21 @@ class Account(models.Model):
 class Leaderboard(models.Model):
     player = models.ForeignKey(Account, on_delete=models.CASCADE)
 
+
+class AccountForm(ModelForm):
+    class Meta:
+        model = Account
+        fields = ['username', 'password']
+
+
+'''
+    ACCOUNTS ARE BEING CREATED!!!!! YAY
+    Accounts List:
+        1. admin, test234, Feb. 11, 2025, 7:13 p.m.
+        2. admin123, test2344, Feb. 11, 2025, 7:14 p.m.
+        3. admin8, test8, Feb. 11, 2025, 7:15 p.m.
+        4. testaccount0, testaccount0, Feb. 11, 2025, 7:22 p.m.
+'''
 
 '''
     {% for account in accounts %}
