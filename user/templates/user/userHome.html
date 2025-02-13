@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+    
+
+    <h1>Dashboard</h1>
+    
+    {% for account in accounts %}
+        {% if username == account.username %}
+            <p>Username: {{ account.username }}</p>
+            <p>Password: {{ account.password }}</p>
+            <p>Joined: {{ account.join_date }}</p>
+        {% endif %}
+    {% endfor %}
+    
+    
+{% endblock content %}
