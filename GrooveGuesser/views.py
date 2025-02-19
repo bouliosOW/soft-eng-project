@@ -2,8 +2,7 @@ from django.shortcuts import render
 # from django.contrib.auth.forms import UserCreationForm #registration (WIP PF)
 from django.http import HttpResponse,JsonResponse
 import random
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
+
 from django.conf import settings
 from googleapiclient.discovery import build
 from django.shortcuts import render
