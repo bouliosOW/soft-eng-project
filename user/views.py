@@ -9,6 +9,18 @@ from . import forms
 from .models import Account
 
 
+'''
+    IMPORTANT ---------------------------------------------------------
+    This code
+        Account.objects.create(username = form.cleaned_data["username"], password = form.cleaned_data["password"])
+    creates a new object within the table
+
+    This code
+        newRound = Round(player="newplayer", score=1)
+    creates a temporary object that does not last beyond this instance of the page
+'''
+
+
 
 def users(request):
     template_data = {}

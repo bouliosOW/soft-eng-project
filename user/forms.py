@@ -10,3 +10,4 @@ class SignUpForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(label="Username", max_length=15)
     password = forms.CharField(label="Password", max_length=20)
+

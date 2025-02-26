@@ -4,6 +4,8 @@ from django.http import HttpResponse,JsonResponse
 import random
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from user.models import Account #This should give this file access to the model Account in \user\models.py
+from .models import Round
 
 #grooveguesser test responses
 def index(request):
@@ -30,7 +32,18 @@ def game(request):
     })
     
 
-
+def leaderboard(request):
+    template_data = {}
+    template_data['title'] = "Leaderboard"
+    accounts = Account.objects.all()
+    newRound = Round(player="newplayer", score=1)
+    allRounds = Round.objects.all()
+    return render(request, 'leaderboard.html', {
+        'template_data': template_data,
+        'accounts': accounts,
+        'gameRound': newRound,
+        'allRounds': allRounds
+    })
 
 #registration app (WIP PF)
 # def registerview(request):

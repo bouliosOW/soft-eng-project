@@ -15,6 +15,7 @@ class Account(models.Model):
 class Leaderboard(models.Model):
     player = models.ForeignKey(Account, on_delete=models.CASCADE)
     
+    
 
 
 class AccountForm(ModelForm):
