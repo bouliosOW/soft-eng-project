@@ -24,4 +24,9 @@
     <p style="color: red;">No video ID found.</p>
 {% endif %}
 
+{% load static %}
+<audio controls>
+    <source src="{% static 'mp3s/LifeIsAHighwayTomCochrane.mp3' %}" type="audio/mpeg">
+</audio>
+
 {% endblock content %}
