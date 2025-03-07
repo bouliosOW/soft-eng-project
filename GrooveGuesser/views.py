@@ -24,11 +24,22 @@ def about(request):
         'template_data': template_data
     })
 
+def pregame(request):
+    template_data = {}
+    template_data['title'] = "Enter Game"
+    playerName = request.session.get('playerName', '')
+    return render(request, 'pregame.html', {
+        'template_data': template_data,
+        'playerName': playerName
+    })
+
 def game(request):
     template_data = {}
     template_data['title'] = "Game"
+    playerName = request.session.get('playerName', '')
     return render(request, 'game.html', {
-        'template_data': template_data
+        'template_data': template_data,
+        'playerName': playerName
     })
     
 

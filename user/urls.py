@@ -10,4 +10,5 @@ urlpatterns = [
     path("process", views.get_new_user, name="user.get_new_user"),
     path("userHome", views.userHome, name="user.userHome"),
     path("enter", views.user_enter, name="user.user_enter"),
+    path("play", views.playerGame, name="user.playGame")
 ]

@@ -5,4 +5,10 @@
     <h1>Groove Guesser</h1>
     <p>Guess the song!</p>
 
+    {% if playerName %}
+        <p>Hello {{ playerName }}!</p>
+    {% else %}
+        <p>This is a practice game.</p>
+    {% endif %}
+
 {% endblock content %}

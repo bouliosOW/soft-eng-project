@@ -58,8 +58,6 @@ def get_new_user(request):
             print("Form errors:", form.errors) 
             return redirect('user.signup')  
     
-
-
     
     return render(request, 'users.html', {'form': form})
 
@@ -97,3 +95,8 @@ def user_enter(request):
     return render(request, 'login.html', {'form': form})
 
 
+def playerGame(request):
+    player = request.GET.get('data')
+    if player:
+        request.session['playerName'] = player
+    return redirect('pregame')
