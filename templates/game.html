@@ -25,8 +25,79 @@
 {% endif %}
 
 {% load static %}
-<audio controls>
-    <source src="{% static 'mp3s/LifeIsAHighwayTomCochrane.mp3' %}" type="audio/mpeg">
+<audio controls id="audio-player">
+    <source id="audio-source" src="{% static 'mp3s/LifeIsAHighwayTomCochrane.mp3' %}" type="audio/mpeg">
 </audio>
+
+<div>
+    <button class="btn btn-primary" onclick="playAudio()">Play</button>
+    <br>
+    <button class="btn btn-primary" onclick="pauseAudio()">Pause</button>
+    <br>
+    <button class="btn btn-primary" onclick="stopAudio()">Stop</button>
+    <br>
+    <button class="btn btn-primary" onclick="restartAudio()">Restart</button>
+</div>
+
+<form action="" style="border: 3px solid red;" class="m-4 p-4">
+    <div class="mb-2">
+        <label for="title">What is the song's title?</label>
+        <input type="text" id="title">
+    </div>  
+    <br>
+    <div class="mb-2">
+        <label for="name">What is the artist's name?</label>
+        <input type="text" id="name">
+    </div>
+    <br>
+    <div class="mb-2">
+        <label for="year">What year was this song released?</label>
+        <input type="number" id="year">
+    </div>
+    <br>
+    <button class="btn btn-danger" type="submit">Guess that Groove!</button>
+</form>
+
+<script>
+    const audioPlayer = document.getElementById("audio-player")
+    const audioSource = document.getElementById('audio-source')
+
+
+
+    // Pause the audio after 10 seconds and show the alert
+    if(audioPlayer.currentTime == 5) {
+        pauseAudio()
+    }
+
+    audio.addEventListener("timeupdate", function () {
+        if (audio.currentTime >= 10) {
+            audio.pause();  // Stop at 10 seconds
+            audio.currentTime = 0;  // Reset to the beginning
+        }
+    });
+
+
+    function playAudio() {
+        audioPlayer.play()
+    }
+
+    function pauseAudio() {
+        audioPlayer.pause()
+    }
+
+    function stopAudio() {
+        audioPlayer.pause()
+        audioPlayer.style.display = 'none'
+    }
+
+    function restartAudio() {
+        audioPlayer.currentTime = 0
+        audioPlayer.style.display = 'block'
+    }
+
+    function checkAnswer() {
+        
+    }
+</script>
 
 {% endblock content %}
