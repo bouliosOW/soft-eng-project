@@ -1,15 +1,20 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 {% block content %}
 {% load static %}
 
-  <h1>About</h1>
-  <p>GrooveGuesser is currently in development for a Software Engineering class
-    at Florida Southern College. The current developers are listed as follows:
-    Adam Boulos,
-    Matt Flammenspeck,
-    Patrick Fratus,
-    Colsen Hernandez, and
-    Anderson Morris.
-  </p>
-  
+<div class="info-text">
+    <h1>About</h1>
+    <p>GrooveGuesser is currently in development for a Software Engineering class
+        at Florida Southern College. The current developers are:</p>
+
+    <ul>
+        <li>Adam Boulos</li>
+        <li>Matt Flammenspeck</li>
+        <li>Patrick Fratus</li>
+        <li>Colsen Hernandez</li>
+        <li>Anderson Morris</li>
+    </ul>
+</div>
+
 {% endblock content %}

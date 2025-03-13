@@ -1,8 +1,13 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 {% block content %}
 {% load static %}
 
-    <h1>Groove Guesser</h1>
-    <p>Guess the song!</p>
+<div class="info-text">
+    <h1>Game Mode</h1>
+    <p>Are you ready to test your music knowledge? Start playing GrooveGuesser and see if you can guess the song before time runs out!</p>
+    
+    <a href="{% url 'start_game' %}" class="btn btn-primary">Start Game</a>
+</div>
 
 {% endblock content %}
