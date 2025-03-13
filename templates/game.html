@@ -5,23 +5,52 @@
     <h1 style="color: #61302b;">Groove Guesser</h1>
     <p style="color: #61302b;">Guess the song!</p>
 
-    {% if video_details %}
-    <h2>{{ video_details.title }}</h2>
-    <p>{{ video_details.description }}</p>
-{% else %}
-    <p style="color: red;">No video details found. Check API response.</p>
-{% endif %}
 
-{% if video_id %}
-    <iframe width="560" height="315"
-            src="https://www.youtube.com/embed/{{ video_id }}"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-    </iframe>
-{% else %}
-    <p style="color: red;">No video ID found.</p>
-{% endif %}
+
+
+{% load static %}
+<audio id="audio-player">
+    <source id="audio-source" src="" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
+
+<button onclick="playAudio()">Play</button>
+<button onclick="pauseAudio()">Pause</button>
+<button onclick="stopAudio()">Stop</button>
+<button onclick="playRandomAudio()">Play Random</button>
+
+<script>
+    // List of MP3 filenames passed from Django template
+    const mp3File = { mp3_file };
+        
+    // Get the audio player element
+    const audioPlayer = document.getElementById('audio-player');
+    const audioSource = document.getElementById('audio-source');
+
+    
+    // Pause the audio after 10 seconds and show the alert
+    setTimeout(function() {
+        document.getElementById('songPlayer').pause();
+        alert('Time is up! Guess the song.'); }, 10000);  // 10 seconds
+    
+
+    // Function to play the audio
+    function playAudio() {
+        audioPlayer.play();
+    }
+    // Function to pause the audio
+    function pauseAudio() {
+        audioPlayer.pause();
+    }
+
+    // Function to stop the audio and reset it
+    function stopAudio() {
+        audioPlayer.pause();
+        audioPlayer.currentTime = 0;
+    }
+
+    // Function to play a random audio
+    
+</script>
 
 {% endblock content %}
