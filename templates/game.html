@@ -26,8 +26,9 @@
 
 {% load static %}
 <audio controls id="audio-player">
-    <source id="audio-source" src="{% static 'mp3s/LifeIsAHighwayTomCochrane.mp3' %}" type="audio/mpeg">
+    <source id="audio-source" src="{% static playThis.path %}" type="audio/mpeg">
 </audio>
+<p>{{playThis}}</p>
 
 <div>
     <button class="btn btn-primary" onclick="playAudio()">Play</button>

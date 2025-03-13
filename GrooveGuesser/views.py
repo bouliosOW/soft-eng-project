@@ -6,7 +6,7 @@ import time
 from django.conf import settings
 from googleapiclient.discovery import build
 from django.shortcuts import render
-# import Song from '..models/models.py'
+from .models import Song
 
 #grooveguesser test responses
 def index(request):
@@ -28,10 +28,13 @@ def about(request):
 def game(request):
     template_data = {}
     template_data['title'] = "Game"
-    allSongs = Song
-    randy = math.random()
+    # allSongs = Song.objects.all()
+    # randy = random.randint(0, len(allSongs) - 1)
+    # playThis = allSongs[randy]
+    playThis = Song(title="Life is a Highway", artist="Tom Cochrane", year=1991, album="Mad Mad World", path="mp3s/LifeIsAHighwayTomCochrane.mp3")
     return render(request, 'game.html', {
-        'template_data': template_data
+        'template_data': template_data,
+        'playThis': playThis
     })
 
 def get_video_details(video_id):
