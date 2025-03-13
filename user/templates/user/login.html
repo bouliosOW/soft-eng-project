@@ -8,17 +8,17 @@
         If you do not yet have an account, then head to the sign up page.
         <a href="{% url 'user.signup' %}">Return to Sign Up Page</a>
 
+        <form action="{% url 'user.user_enter' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+
         {% for account in accounts %}
             <p>Username: {{ account.username }}</p>
             <p>Password: {{ account.password }}</p>
             <p>Joined: {{ account.join_date }}</p>
         {% endfor %}
-
-        {% if accounts %}
-            <p>Accounts exist</p>
-        {% else %}
-            <p>No accounts exist</p>
-        {% endif %}
 
     </p>
 

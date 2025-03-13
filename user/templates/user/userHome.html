@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+    
+
+    <h1 id="GrooveTitle">Dashboard</h1>
+
+    <div>
+        <h3 style="color: red; border: 5px solid red; border-radius: 20px; text-align: center;">Hello, {{ username }}!</h3>
+        <a href="{% url 'user.login' %}" style="color: red;">LOG OUT</a>
+        <br><br><br>
+        
+        {% for account in accounts %}
+            {% if username == account.username %}
+                <h4 style="color: red;">Your Data:</h4>
+                <div style=" border: 3px solid red; border-radius: 10px; padding: 10px;">
+                    <p></p>
+                    <p><strong>Username:</strong> {{ account.username }}</p>
+                    <p><strong>Password:</strong> {{ account.password }}</p>
+                    <p><strong>Joined:</strong> {{ account.join_date }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <br><br>
+
+        <h3 style="color: red;">Overall Game Performance</h3>
+        <div style=" border: 3px solid red; border-radius: 10px;">
+            <section style="margin-left: 15%; margin-top: 5%; margin-right: 15%; margin-bottom: 5%;">
+                This is where I would put my game stats...
+                If I had any!
+            </section>
+        </div>
+        <br><br>
+
+        <h4 style="color: red;">Ready for another round?</h4>
+        <div style="margin: 5%;">
+            <a href="{% url 'user.playGame' %}?data={{username}}" style="color: red;">Click Here to Start a New Game of GrooveGuesser!</a>
+        </div>
+    </div>
+    
+    
+{% endblock content %}

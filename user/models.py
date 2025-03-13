@@ -1,10 +1,11 @@
 from django.db import models
 from django.forms import ModelForm
+from django.core.validators import MinLengthValidator
 
 # Create your models here.
 
 class Account(models.Model):
-    username = models.CharField(max_length=15, unique=True)
+    username = models.CharField(max_length=15, unique=True, validators=[MinLengthValidator(3)])
     password = models.CharField(max_length=20)
     join_date = models.DateTimeField("Join Date", auto_now_add=True)
 
@@ -14,6 +15,8 @@ class Account(models.Model):
 
 class Leaderboard(models.Model):
     player = models.ForeignKey(Account, on_delete=models.CASCADE)
+    
+    
 
 
 class AccountForm(ModelForm):
