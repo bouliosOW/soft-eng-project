@@ -6,6 +6,7 @@ import time
 from django.conf import settings
 from googleapiclient.discovery import build
 from django.shortcuts import render
+# import Song from '..models/models.py'
 
 #grooveguesser test responses
 def index(request):
@@ -27,6 +28,8 @@ def about(request):
 def game(request):
     template_data = {}
     template_data['title'] = "Game"
+    allSongs = Song
+    randy = math.random()
     return render(request, 'game.html', {
         'template_data': template_data
     })

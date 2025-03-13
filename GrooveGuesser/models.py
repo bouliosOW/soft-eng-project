@@ -6,9 +6,10 @@ class Song(models.Model):
     artist = models.CharField(max_length=100)
     year = models.IntegerField()
     album = models.CharField(max_length=100)
+    path = models.CharField(max_length=100)
 
 
-
+Song.objects.create(title="Life is a Highway", artist="Tom Cochrane", year=1991, album="Mad Mad World", path="mp3s/LifeIsAHighwayTomCochrane.mp3")
 
 # Create your models here.
 
