@@ -28,13 +28,10 @@ def about(request):
 def game(request):
     template_data = {}
     template_data['title'] = "Game"
-    # allSongs = Song.objects.all()
-    # randy = random.randint(0, len(allSongs) - 1)
-    # playThis = allSongs[randy]
-    playThis = Song(title="Life is a Highway", artist="Tom Cochrane", year=1991, album="Mad Mad World", path="mp3s/LifeIsAHighwayTomCochrane.mp3")
+    song = Song(title="Life is a Highway", artist="Tom Cochrane", year=1991, album="Mad Mad World", path='\static\mp3s\LifeIsAHighwayTomCochrane.mp3')
     return render(request, 'game.html', {
         'template_data': template_data,
-        'playThis': playThis
+        'song': song
     })
 
 def get_video_details(video_id):
@@ -48,15 +45,6 @@ def get_video_details(video_id):
     
     return None
 
-def game(request):
-    """View function to display a YouTube video in the game page."""
-    
-    video_id = "3JZ_D3ELwOQ" 
-    video_details = get_video_details(video_id)
-    
-    print("Video Details:", video_details)
-
-    return render(request, 'game.html', {"video_id": video_id, "video_details": video_details})
 
 def leaderboard(request):
     template_data = {}

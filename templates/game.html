@@ -5,30 +5,12 @@
     <h1 style="color: #61302b;">Groove Guesser</h1>
     <p style="color: #61302b;">Guess the song!</p>
 
-    {% if video_details %}
-    <h2>{{ video_details.title }}</h2>
-    <p>{{ video_details.description }}</p>
-{% else %}
-    <p style="color: red;">No video details found. Check API response.</p>
-{% endif %}
+    {{ song.title }}
 
-{% if video_id %}
-    <iframe width="560" height="315"
-            src="https://www.youtube.com/embed/{{ video_id }}"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-    </iframe>
-{% else %}
-    <p style="color: red;">No video ID found.</p>
-{% endif %}
-
-{% load static %}
 <audio controls id="audio-player">
-    <source id="audio-source" src="{% static playThis.path %}" type="audio/mpeg">
+    <source id="audio-source" src={{ song.path }} type="audio/mpeg">
 </audio>
-<p>{{playThis}}</p>
+
 
 <div>
     <button class="btn btn-primary" onclick="playAudio()">Play</button>
@@ -63,7 +45,7 @@
     const audioPlayer = document.getElementById("audio-player")
     const audioSource = document.getElementById('audio-source')
 
-
+    // console.log(songs)
 
     // Pause the audio after 10 seconds and show the alert
     if(audioPlayer.currentTime == 5) {
@@ -71,9 +53,9 @@
     }
 
     audio.addEventListener("timeupdate", function () {
-        if (audio.currentTime >= 10) {
-            audio.pause();  // Stop at 10 seconds
-            audio.currentTime = 0;  // Reset to the beginning
+        if (audioPlayer.currentTime >= 10) {
+            audioPlayer.pause();  // Stop at 10 seconds
+            audioPlayer.currentTime = 0;  // Reset to the beginning
         }
     });
 
@@ -96,9 +78,6 @@
         audioPlayer.style.display = 'block'
     }
 
-    function checkAnswer() {
-        
-    }
 </script>
 
 {% endblock content %}
