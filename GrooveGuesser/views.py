@@ -1,8 +1,9 @@
-from django.shortcuts import render
+
 # from django.contrib.auth.forms import UserCreationForm #registration (WIP PF)
 from django.http import HttpResponse,JsonResponse
 import random
 import time
+import os
 from django.conf import settings
 from googleapiclient.discovery import build
 from django.shortcuts import render
@@ -34,21 +35,13 @@ def game(request):
         'song': song
     })
 
-def get_video_details(video_id):
-
-    youtube = build("youtube", "v3", developerKey=settings.YOUTUBE_API_KEY)
-    
-    request = youtube.videos().list(
-        part="snippet",
-        id=video_id
-    )
-    
-    return None
 
 
 def leaderboard(request):
     template_data = {}
     template_data['title'] = "Leaderboard"
-    return render(request, 'leaderboard.html', {
-        'template_data': template_data
-    })
+    return render(request, 'leaderboard.html', {'template_data': template_data})
+
+
+def audio_player(request):
+    return render(request, 'audio_player.html')
