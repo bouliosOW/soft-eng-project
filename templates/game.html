@@ -2,10 +2,10 @@
 {% block content %}
 {% load static %}
 
-    <h1 style="color: #61302b;">Groove Guesser</h1>
-    <p style="color: #61302b;">Guess the song!</p>
+<h1 style="color: #61302b;">Groove Guesser</h1>
+<p style="color: #61302b;">Guess the song!</p>
 
-    {{ song.title }}
+{{ song.title }}
 
 <audio controls id="audio-player">
     <source id="audio-source" src={{ song.path }} type="audio/mpeg">
@@ -22,7 +22,9 @@
     <button class="btn btn-primary" onclick="restartAudio()">Restart</button>
 </div>
 
-<form action="" style="border: 3px solid red;" class="m-4 p-4">
+
+
+<form action="" onsubmit="checkAnswers(event)" style="border: 3px solid red;" class="m-4 p-4">
     <div class="mb-2">
         <label for="title">What is the song's title?</label>
         <input type="text" id="title">
@@ -41,18 +43,38 @@
     <button class="btn btn-danger" type="submit">Guess that Groove!</button>
 </form>
 
+
+
+<div style="border: 3px solid red;" class="m-4 p-4">
+    <p id="titleGuess">{{guesses.title}}</p>
+    <p id="artistGuess">{{guesses.artist}}</p>
+    <p id="yearGuess">{{guesses.year}}</p>
+</div>
+
+
 <script>
     const audioPlayer = document.getElementById("audio-player")
     const audioSource = document.getElementById('audio-source')
 
-    // console.log(songs)
+    const test = "Please"
+
+    const song = {
+        title: "{{ song.title|escapejs }}",
+        artist: "{{ song.artist|escapejs }}",
+        year: "{{ song.year|escapejs }}",
+        album: "{{ song.album|escapejs}}",
+        path: "{{ song.path|escapejs }}"
+    };
+    song.year = parseInt(song.year, 10)
+
+    console.log(song); // Now you can access song data in JavaScript
 
     // Pause the audio after 10 seconds and show the alert
     if(audioPlayer.currentTime == 5) {
         pauseAudio()
     }
 
-    audio.addEventListener("timeupdate", function () {
+    audioPlayer.addEventListener("timeupdate", function () {
         if (audioPlayer.currentTime >= 10) {
             audioPlayer.pause();  // Stop at 10 seconds
             audioPlayer.currentTime = 0;  // Reset to the beginning
@@ -77,6 +99,39 @@
         audioPlayer.currentTime = 0
         audioPlayer.style.display = 'block'
     }
+
+
+    let guessed = false
+
+    let guesses = {
+        title: false,
+        artist: false,
+        year: false
+    }
+
+    let tG = document.getElementById("titleGuess")
+    let aG = document.getElementById("artistGuess")
+    let yG = document.getElementById("yearGuess")
+    
+    function checkAnswers(event) {
+        event.preventDefault()
+
+        let formData = {
+            titleGuess: document.getElementById("title").value,
+            artistGuess: document.getElementById("artist"),
+            yearGuess: document.getElementById("year").value
+        }
+
+        guesses.title = formData.titleGuess == song.title
+        guesses.artist = formData.artistGuess == song.artist
+        guesses.year = formData.yearGuess == song.year
+
+        tG.textContent = guesses.title
+        aG.textContent = guesses.artist
+        yG.textContent = guesses.year
+    }
+
+    
 
 </script>
 
