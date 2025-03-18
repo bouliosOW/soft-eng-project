@@ -1,6 +1,8 @@
 import random
 import os
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
+from django.template import TemplateDoesNotExist
 import requests
 import json
 from .forms import SignUpForm, LoginForm
@@ -45,15 +47,20 @@ def login(request):
 # The form isn't working to create new Account records. Must fix
 
 def get_new_user(request):
-    #print("Arrived:", "at view get_new_user")
+
     if request.method == 'POST':
+
         form = SignUpForm(request.POST)
 
         if form.is_valid():
-            #print("crash:", "out")
-            # UPDATE DATABASE HERE
-            Account.objects.create(username = form.cleaned_data["username"], password = form.cleaned_data["password"])
-            return redirect('user.login')
+
+            try:
+                Account.objects.create(username = form.cleaned_data["username"], password = form.cleaned_data["password"])
+                return redirect('user.login')
+            except (IntegrityError, TemplateDoesNotExist):
+                return render(request, 'users.html', {'form': form})
+
+            
         else:
             print("Form errors:", form.errors) 
             return redirect('user.signup')  
