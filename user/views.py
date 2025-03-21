@@ -28,9 +28,11 @@ def users(request):
     template_data = {}
     template_data['title'] = 'Sign Up'
     form = forms.SignUpForm()
+    username = request.session.get('username')
     return render(request, 'user/users.html', {
         'template_data': template_data,
-        'form': form
+        'form': form,
+        'username': username
     })
 
 def login(request):
@@ -38,10 +40,12 @@ def login(request):
     template_data['title'] = 'Log In'
     accounts = Account.objects.all()
     form = forms.LoginForm()
+    username = request.session.get('username')
     return render(request, 'user/login.html', {
         'template_data': template_data,
         'accounts': accounts,
-        'form': form
+        'form': form,
+        'username': username
     })
 
 # The form isn't working to create new Account records. Must fix
@@ -105,5 +109,5 @@ def user_enter(request):
 def playerGame(request):
     player = request.GET.get('data')
     if player:
-        request.session['playerName'] = player
+        request.session['username'] = player
     return redirect('pregame')
