@@ -56,6 +56,14 @@ def leaderboard(request):
         'allRounds': allRounds
     })
 
+# NEW ADDITION
+def signup(request):
+    template_data = {}
+    template_data['title'] = "Sign Up"
+    return render(request, 'signup.html', {
+        'template_data': template_data
+    })
+
 #registration app (WIP PF)
 # def registerview(request):
 #     form = UserCreationForm()

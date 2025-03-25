@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="signup-page-container">
+
+    <h1 class="page-title">Welcome to Groove Guesser</h1>
+    <p class="info-text">Create a new account or log in to start guessing some tunes!</p>
+
+    <div class="signup-login-box">
+        <!-- Sign Up Form -->
+        <div class="form-box">
+            <h2>Create Account</h2>
+            <form action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit" class="action-btn">Sign Up</button>
+            </form>
+        </div>
+
+        <!-- Login Redirect thing -->
+        <div class="form-box">
+            <h2>Already Have an Account?</h2>
+            <p>Click below to log in:</p>
+            <a href="{% url 'user.login' %}" class="action-btn alt-btn">Log In</a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
