@@ -1,9 +1,22 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
 {% load static %}
 
-    <h1 id="GrooveTitle">Groove Guesser</h1>
-    <p>Welcome to GrooveGuesser, a randomly generated song guessing game! More about GrooveGuesser <a href="/about">HERE!</a> </p>
-    <p>If you want to log into your account, or to create a new account, click <a href="user">here</a></p>
+<h1 class="main-title">Groove Guesser</h1>
+
+<div class="info-text">
+   <p>Welcome to <strong>GrooveGuesser</strong>, a randomly generated song guessing game!  
+      Learn more about GrooveGuesser <a href="{% url 'about' %}">HERE!</a></p>
+
+   <p>If you want to log into your account, or create a new account,  
+      click <a href="{% url 'user.signup' %}">HERE!</a>.</p>
+
+   <div class="start-wrapper">
+      <a href="{% url 'game' %}" class="start-btn">Start Game</a>
+      <div class="equalizer">
+          <div></div><div></div><div></div><div></div><div></div>
+      </div>
+   </div>
+</div>
 
 {% endblock content %}

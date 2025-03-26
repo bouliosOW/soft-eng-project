@@ -1,14 +1,25 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 {% block content %}
 {% load static %}
 
+<div class="info-text">
     <h1>Groove Guesser</h1>
     <p>Guess the song!</p>
 
     {% if playerName %}
-        <p>Hello {{ playerName }}!</p>
+        <p>Hello, <strong>{{ playerName }}</strong>!</p>
     {% else %}
         <p>This is a practice game.</p>
     {% endif %}
+
+    <p>Learn more about GrooveGuesser <a href="{% url 'about' %}">HERE!</a></p>
+
+    <p>If you want to log into your account, or create a new account,  
+        click <a href="{% url 'user.signup' %}">HERE!</a>.</p>
+
+    <!-- The Start Game Button -->
+    <a href="{% url 'game' %}" class="start-btn">Start Game</a>
+</div>
 
 {% endblock content %}

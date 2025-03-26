@@ -1,18 +1,29 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 {% block content %}
 {% load static %}
 
+<div class="pregame-container">
+    <h1 class="page-title">Prepare for Your Game</h1>
 
     {% if playerName %}
-        <p>You are currently logged in as: {{ playerName }}</p>
-        <p>Would you like to enter as yourself, or play a practice game?</p>
-        <a href="{% url 'game' %}?data={{ playerName }}">Play as Self</a>
-        <a href="{% url 'game' %}?data=''">Play Practice Game</a>
+        <p class="info-text">You are currently logged in as: <strong>{{ playerName }}</strong></p>
+        <p class="info-text">Would you like to enter as yourself or play a practice game?</p>
+        
+        <div class="button-group">
+            <a href="{% url 'game' %}?data={{ playerName }}" class="action-btn">Play as Self</a>
+            <a href="{% url 'game' %}?data=''" class="action-btn alt-btn">Play Practice Game</a>
+        </div>
+
     {% else %}
-        <p>You are not logged in with any account!</p>
-        <p>Would you like to log in as yourself, or play a practice game?</p>
-        <a href="{% url 'user.login' %}">Log in</a>
-        <a href="{% url 'game' %}?data=''">Play Practice Game</a>
+        <p class="info-text">You are not logged in with any account!</p>
+        <p class="info-text">Would you like to log in as yourself or play a practice game?</p>
+
+        <div class="button-group">
+            <a href="{% url 'user.login' %}" class="action-btn">Log In</a>
+            <a href="{% url 'game' %}?data=''" class="action-btn alt-btn">Play Practice Game</a>
+        </div>
     {% endif %}
+</div>
 
 {% endblock content %}
