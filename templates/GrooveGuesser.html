@@ -1,12 +1,31 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
 {% load static %}
 
+<<<<<<< HEAD
     <h1 id="GrooveTitle">Groove Guesser</h1>
     <p>Welcome to Groove Guesser! A game where you guess a song as fast as you can!</p>
     <p>If you'd like to start playing, head to the Game page.</p>
     <p>If you'd like to learn more about this program, head to the About page.</p>
     <p>If you'd like to log in to an account or sign up, head to the Accounts page.</p>
     <p>If you'd like to see a leaderboard of the best players, head to the Leaderboard page.</p>
+=======
+<h1 class="main-title">Groove Guesser</h1>
+>>>>>>> feature/Websites
+
+<div class="info-text">
+   <p>Welcome to <strong>GrooveGuesser</strong>, a randomly generated song guessing game!  
+      Learn more about GrooveGuesser <a href="{% url 'about' %}">HERE!</a></p>
+
+   <p>If you want to log into your account, or create a new account,  
+      click <a href="{% url 'user.signup' %}">HERE!</a>.</p>
+
+   <div class="start-wrapper">
+      <a href="{% url 'game' %}" class="start-btn">Start Game</a>
+      <div class="equalizer">
+          <div></div><div></div><div></div><div></div><div></div>
+      </div>
+   </div>
+</div>
 
 {% endblock content %}

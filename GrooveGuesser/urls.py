@@ -14,7 +14,11 @@ urlpatterns = [
     #user registration app
     # path('register',views.registerview, name="register"),
 
-    path('pregame', views.pregame, name='pregame')
+    path('pregame', views.pregame, name='pregame'),
+    
+    # NEW ADDITION
+    path('signup/', views.signup, name='signup'),
+
 
 
     #user login app

@@ -70,5 +70,20 @@ def leaderboard(request):
         'allRounds': allRounds
     })
 
+<<<<<<< HEAD
 def audio_player(request):
     return render(request, 'audio_player.html')
+=======
+# NEW ADDITION
+def signup(request):
+    template_data = {}
+    template_data['title'] = "Sign Up"
+    return render(request, 'signup.html', {
+        'template_data': template_data
+    })
+
+#registration app (WIP PF)
+# def registerview(request):
+#     form = UserCreationForm()
+#     return render(request, "users/registers.html", { "form": form })
+>>>>>>> feature/Websites
