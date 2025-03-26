@@ -139,4 +139,10 @@
 
 </script>
 
+    {% if playerName %}
+        <p>Hello {{ playerName }}!</p>
+    {% else %}
+        <p>This is a practice game.</p>
+    {% endif %}
+
 {% endblock content %}

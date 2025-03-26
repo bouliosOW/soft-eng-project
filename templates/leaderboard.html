@@ -5,5 +5,23 @@
   <h1>Leaderboard</h1>
   <p>placeholder</p>
   <p>leaderboar goes here</p>
+<<<<<<< HEAD
+=======
+
+
+  {% for account in accounts %}
+    <p>Rank: N/A (add number later) | Name: {{ account.username }} | Average Score: N/A (add to database later) | Joined: {{ account.join_date }}</p>
+  {% endfor %}
+
+  <h3>Next we have the new round</h3>
+  <p>{{ gameRound.player }}</p>
+  <p>{{ gameRound.score }}</p>
+
+
+  <h3>Here is a list of all rounds played</h3>
+  {% for round in allRounds %}
+    <p>{{ round.player }} {{ round.score }}</p>
+  {% endfor %}
+>>>>>>> feature/Websites
   
 {% endblock content %}

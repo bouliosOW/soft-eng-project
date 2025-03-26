@@ -1,4 +1,5 @@
 from django.db import models
+from user.models import Account
 
 
 class Song(models.Model):
@@ -23,6 +24,11 @@ class Song(models.Model):
 
 # class Leaderboard(models.Model):
 #     player = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+
+class Round(models.Model):
+    player = models.CharField(max_length=10)
+    score = models.BigIntegerField(blank=0)
     
 '''
     IMPORTANT! -----------------------
