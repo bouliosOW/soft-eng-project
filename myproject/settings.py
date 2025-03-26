@@ -120,9 +120,8 @@ USE_TZ = True
 import os
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles')  # Ensure Django looks here!
-]
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
 
 
 
