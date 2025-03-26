@@ -5,11 +5,8 @@ import random
 import time
 import os
 from django.conf import settings
-from googleapiclient.discovery import build
 from django.shortcuts import render
 from .models import Song
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
 from user.models import Account #This should give this file access to the model Account in \user\models.py
 from .models import Round
 
@@ -70,10 +67,8 @@ def leaderboard(request):
         'allRounds': allRounds
     })
 
-<<<<<<< HEAD
 def audio_player(request):
     return render(request, 'audio_player.html')
-=======
 # NEW ADDITION
 def signup(request):
     template_data = {}
@@ -86,4 +81,3 @@ def signup(request):
 # def registerview(request):
 #     form = UserCreationForm()
 #     return render(request, "users/registers.html", { "form": form })
->>>>>>> feature/Websites
