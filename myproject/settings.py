@@ -121,7 +121,7 @@ import os
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles')  # Ensure Django looks here!
+    os.path.join(BASE_DIR, 'staticfiles')  
 ]
 
 

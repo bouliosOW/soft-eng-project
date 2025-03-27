@@ -269,3 +269,7 @@ body {
 }
 
 
+/* About Page */
+.about-text li {
+    color: #D74143 !important;
+}
