@@ -1,9 +1,54 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
 {% block content %}
 {% load static %}
 
-  <h1>Leaderboard</h1>
-  <p>placeholder</p>
-  <p>leaderboar goes here</p>
-  
+<div class="leaderboard-container">
+    <!--  Main Title -->
+    <h1 class="page-title">Leaderboard</h1>
+
+    <!--  Leaderboard Section -->
+    <div class="info-box">
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Average Score</th>
+                    <th>Joined</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for account in accounts %}
+                    <tr>
+                        <td>{{ account.username }}</td>
+                        <td>{{ account.average_score|default:0 }}</td>
+                        <td>{{ account.join_date }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" class="empty-message">No players yet.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!--  Next Round -->
+    <h2 class="section-title">Next Round</h2>
+    <div class="info-box">
+        <p><strong>Player:</strong> {{ gameRound.player }}</p>
+        <p><strong>Score:</strong> {{ gameRound.score }}</p>
+    </div>
+
+    <!--  All Rounds Played -->
+    <h2 class="section-title">All Rounds Played</h2>
+    <div class="info-box">
+        {% for round in allRounds %}
+            <p><strong>{{ round.player }}</strong>: {{ round.score }}</p>
+        {% empty %}
+            <p class="empty-message">No rounds played yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock content %}

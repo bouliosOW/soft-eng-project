@@ -1,12 +1,14 @@
-from django.shortcuts import render
+
 # from django.contrib.auth.forms import UserCreationForm #registration (WIP PF)
 from django.http import HttpResponse,JsonResponse
 import random
-import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
+import time
+import os
 from django.conf import settings
-from googleapiclient.discovery import build
 from django.shortcuts import render
+from .models import Song
+from user.models import Account #This should give this file access to the model Account in \user\models.py
+from .models import Round
 
 #grooveguesser test responses
 def index(request):
@@ -28,34 +30,54 @@ def about(request):
 def game(request):
     template_data = {}
     template_data['title'] = "Game"
+    songList = [Song(title="Life is a Highway", artist="Tom Cochrane", year=1991, album="Mad Mad World", path='\static\mp3s\LifeIsAHighwayTomCochrane.mp3'),
+                Song(title="All Star", artist="Smash Mouth", year=1999, album="Astro Lounge", path='\static\mp3s\All-Star-Smash-Mouth.mp3'),
+                Song(title="Everybody Wants to Rule the World", artist="Tears for Fears", year=1985, album="Songs from the Big Chair", path='\static\mp3s\Everybody-Wants-To-Rule-The-World-Tears-For-Fears.mp3'),
+                Song(title="I'm Still Standing", artist="Elton John", year=1983, album="Too Low for Zero", path='\static\mp3s\Im-Still-Standing-Elton-John.mp3'),
+                Song(title="Vitrual Insanity", artist="Jamiroquai", year=1996, album="Travelling Without Moving", path='\static\mp3s\Virtual-Insanity-Jamiroquai.mp3')]
+    
+    song=random.choice(songList)
     return render(request, 'game.html', {
-        'template_data': template_data
+        'template_data': template_data,
+        'song': song
     })
 
-def get_video_details(video_id):
 
-    youtube = build("youtube", "v3", developerKey=settings.YOUTUBE_API_KEY)
-    
-    request = youtube.videos().list(
-        part="snippet",
-        id=video_id
-    )
-    
-    return None
+def pregame(request):
+    template_data = {}
+    template_data['title'] = "Enter Game"
+    playerName = request.session.get('playerName', '')
+    return render(request, 'pregame.html', {
+        'template_data': template_data,
+        'playerName': playerName
+    })
 
-def game(request):
-    """View function to display a YouTube video in the game page."""
     
-    video_id = "3JZ_D3ELwOQ" 
-    video_details = get_video_details(video_id)
-    
-    print("Video Details:", video_details)
-
-    return render(request, 'game.html', {"video_id": video_id, "video_details": video_details})
 
 def leaderboard(request):
     template_data = {}
     template_data['title'] = "Leaderboard"
+    accounts = Account.objects.all()
+    newRound = Round(player="newplayer", score=1)
+    allRounds = Round.objects.all()
     return render(request, 'leaderboard.html', {
+        'template_data': template_data,
+        'accounts': accounts,
+        'gameRound': newRound,
+        'allRounds': allRounds
+    })
+
+def audio_player(request):
+    return render(request, 'audio_player.html')
+# NEW ADDITION
+def signup(request):
+    template_data = {}
+    template_data['title'] = "Sign Up"
+    return render(request, 'signup.html', {
         'template_data': template_data
     })
+
+#registration app (WIP PF)
+# def registerview(request):
+#     form = UserCreationForm()
+#     return render(request, "users/registers.html", { "form": form })

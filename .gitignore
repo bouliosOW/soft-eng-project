@@ -5,6 +5,8 @@
 __pycache__
 db.sqlite3
 media
+#added on recommendation of chatGPT
+__pycache__/
 
 # Backup files # 
 *.bak 
