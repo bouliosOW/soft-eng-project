@@ -67,6 +67,18 @@ def leaderboard(request):
         'allRounds': allRounds
     })
 
+
+# This used to be in leaderboard, creates errors without Round model
+# <!--  All Rounds Played -->
+#     <h2 class="section-title">All Rounds Played</h2>
+#     <div class="info-box">
+#         {% for round in allRounds %}
+#             <p><strong>{{ round.player }}</strong>: {{ round.score }}</p>
+#         {% empty %}
+#             <p class="empty-message">No rounds played yet.</p>
+#         {% endfor %}
+#     </div>
+
 def audio_player(request):
     return render(request, 'audio_player.html')
 # NEW ADDITION
