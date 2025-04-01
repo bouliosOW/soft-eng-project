@@ -58,7 +58,7 @@ def pregame(request):
     if data == 'p':
         practice = True
 
-    return render(request, 'game.html', {
+    return render(request, 'pregame.html', {
         'template_data': template_data,
         'username': username,
         'practice': practice
