@@ -1,6 +1,8 @@
 import random
 import os
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
+from django.template import TemplateDoesNotExist
 import requests
 import json
 from .forms import SignUpForm, LoginForm
@@ -27,9 +29,11 @@ def users(request):
     template_data = {}
     template_data['title'] = 'Sign Up'
     form = forms.SignUpForm()
+    username = request.session.get('username')
     return render(request, 'user/users.html', {
         'template_data': template_data,
-        'form': form
+        'form': form,
+        'username': username
     })
 
 def login(request):
@@ -37,17 +41,20 @@ def login(request):
     template_data['title'] = 'Log In'
     accounts = Account.objects.all()
     form = forms.LoginForm()
+    username = request.session.get('username')
     return render(request, 'user/login.html', {
         'template_data': template_data,
         'accounts': accounts,
-        'form': form
+        'form': form,
+        'username': username
     })
 
 # The form isn't working to create new Account records. Must fix
 
 def get_new_user(request):
-    #print("Arrived:", "at view get_new_user")
+
     if request.method == 'POST':
+
         form = SignUpForm(request.POST)
 
         if form.is_valid():
@@ -103,11 +110,11 @@ def user_enter(request):
             print("Form errors:", form.errors)
             return redirect('user.login')
     
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'user/login.html', {'form': form})
 
 
 def playerGame(request):
     player = request.GET.get('data')
     if player:
-        request.session['playerName'] = player
+        request.session['username'] = player
     return redirect('pregame')
