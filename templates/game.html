@@ -140,10 +140,19 @@
 
 </script>
 
+<<<<<<< HEAD
     {% if playerName %}
         <p>Hello, <strong>{{ playerName }}</strong>!</p>
     {% else %}
+=======
+    <p>This is |{{ username }}| username</p>
+    <p>This is |{{ practice }}| practice</p>
+
+    {% if practice %}
+>>>>>>> 5d60d617e38ce0c1c9edf3d8edd1632b89c8e69a
         <p>This is a practice game.</p>
+    {% elif username != '' %}
+        <p>Hello {{ username }}!</p>
     {% endif %}
 
     <p>Learn more about GrooveGuesser <a href="{% url 'about' %}">HERE!</a></p>

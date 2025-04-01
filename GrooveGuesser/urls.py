@@ -15,10 +15,14 @@ urlpatterns = [
     # path('register',views.registerview, name="register"),
 
     path('pregame', views.pregame, name='pregame'),
+<<<<<<< HEAD
     
     # NEW ADDITION
     path('signup/', views.signup, name='signup'),
 
+=======
+    path('logout', views.logout, name='logout')
+>>>>>>> 5d60d617e38ce0c1c9edf3d8edd1632b89c8e69a
 
 
     #user login app
