@@ -16,9 +16,9 @@ class Migration(migrations.Migration):
             name='Account',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('username', models.CharField(max_length=15, unique=True)),
+                ('username', models.CharField(max_length=15)),
                 ('password', models.CharField(max_length=20)),
-                ('join_date', models.DateTimeField(auto_now_add=True, verbose_name='Join Date')),
+                ('join_date', models.DateTimeField(verbose_name='Join Date')),
             ],
         ),
         migrations.CreateModel(

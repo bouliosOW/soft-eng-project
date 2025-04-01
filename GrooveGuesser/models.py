@@ -1,6 +1,16 @@
 from django.db import models
 from user.models import Account
 
+
+class Song(models.Model):
+    title = models.CharField(max_length=100)
+    artist = models.CharField(max_length=100)
+    year = models.IntegerField()
+    album = models.CharField(max_length=100)
+    path = models.CharField(max_length=100)
+
+
+
 # Create your models here.
 
 # class Account(models.Model):

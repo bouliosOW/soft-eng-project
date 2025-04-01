@@ -3,23 +3,144 @@
 {% block content %}
 {% load static %}
 
-<div class="info-text">
-    <h1>Groove Guesser</h1>
-    <p>Guess the song!</p>
+<h1 style="color: #61302b;">Groove Guesser</h1>
+<p style="color: #61302b;">Guess the song!</p>
 
-    {% if playerName %}
-        <p>Hello, <strong>{{ playerName }}</strong>!</p>
-    {% else %}
-        <p>This is a practice game.</p>
-    {% endif %}
+{{ song.title }}
 
-    <p>Learn more about GrooveGuesser <a href="{% url 'about' %}">HERE!</a></p>
+<audio controls id="audio-player">
+    <source id="audio-source" src={{ song.path }} type="audio/mpeg">
+</audio>
 
-    <p>If you want to log into your account, or create a new account,  
-        click <a href="{% url 'user.signup' %}">HERE!</a>.</p>
-
-    <!-- The Start Game Button -->
-    <a href="{% url 'game' %}" class="start-btn">Start Game</a>
+<div>
+    <button class="btn btn-primary" onclick="playAudio()">Play</button>
+    <br>
+    <button class="btn btn-primary" onclick="pauseAudio()">Pause</button>
+    <br>
+    <button class="btn btn-primary" onclick="stopAudio()">Stop</button>
+    <br>
+    <button class="btn btn-primary" onclick="restartAudio()">Restart</button>
 </div>
+
+<form action="" onsubmit="checkAnswers(event)" style="border: 3px solid red;" class="m-4 p-4">
+    <div class="mb-2">
+        <label for="title">What is the song's title?</label>
+        <input type="text" id="title">
+    </div>  
+    <br>
+    <div class="mb-2">
+        <label for="name">What is the artist's name?</label>
+        <input type="text" id="name">
+    </div>
+    <br>
+    <div class="mb-2">
+        <label for="year">What year was this song released?</label>
+        <input type="number" id="year">
+    </div>
+    <br>
+    <button class="btn btn-danger" type="submit">Guess that Groove!</button>
+</form>
+
+<div style="border: 3px solid red;" class="m-4 p-4">
+    <p id="titleGuess">{{guesses.title}}</p>
+    <p id="artistGuess">{{guesses.artist}}</p>
+    <p id="yearGuess">{{guesses.year}}</p>
+</div>
+
+<script>
+    const audioPlayer = document.getElementById("audio-player")
+    const audioSource = document.getElementById('audio-source')
+    audioPlayer.style.display = "none"
+
+    const song = {
+        title: "{{ song.title|escapejs }}",
+        artist: "{{ song.artist|escapejs }}",
+        year: "{{ song.year|escapejs }}",
+        album: "{{ song.album|escapejs}}",
+        path: "{{ song.path|escapejs }}"
+    };
+    song.year = parseInt(song.year, 10)
+
+    console.log(song); // Now you can access song data in JavaScript
+
+    // Pause the audio after 10 seconds and show the alert
+    if(audioPlayer.currentTime == 5) {
+        pauseAudio()
+    }
+    let time = 5
+
+    audioPlayer.addEventListener("timeupdate", function () {
+        if (audioPlayer.currentTime >= time) {
+            audioPlayer.pause();  // Stop at 10 seconds
+            audioPlayer.currentTime = 0;  // Reset to the beginning
+        }
+    });
+
+    function playAudio() {
+        audioPlayer.play()
+    }
+
+    function pauseAudio() {
+        audioPlayer.pause()
+    }
+
+    function stopAudio() {
+        audioPlayer.pause()
+        audioPlayer.style.display = 'none'
+    }
+
+    function restartAudio() {
+        audioPlayer.currentTime = 0
+        audioPlayer.style.display = 'block'
+    }
+
+    let guessed = false
+
+    let guesses = {
+        title: false,
+        artist: false,
+        year: false
+    }
+
+    let tG = document.getElementById("titleGuess")
+    let aG = document.getElementById("artistGuess")
+    let yG = document.getElementById("yearGuess")
+    
+    function checkAnswers(event) {
+        event.preventDefault()
+
+        let formData = {
+            titleGuess: document.getElementById("title").value,
+            artistGuess: document.getElementById("artist"),
+            yearGuess: document.getElementById("year").value
+        }
+
+        guesses.title = formData.titleGuess == song.title
+        guesses.artist = formData.artistGuess == song.artist
+        guesses.year = formData.yearGuess == song.year
+
+        tG.textContent = guesses.title
+        aG.textContent = guesses.artist
+        yG.textContent = guesses.year
+
+        time += 5
+    }
+</script>
+
+{% if playerName %}
+    <p>Hello, <strong>{{ playerName }}</strong>!</p>
+{% elif username != '' %}
+    <p>Hello {{ username }}!</p>
+{% else %}
+    <p>This is a practice game.</p>
+{% endif %}
+
+<p>Learn more about GrooveGuesser <a href="{% url 'about' %}">HERE!</a></p>
+
+<p>If you want to log into your account, or create a new account,  
+    click <a href="{% url 'user.signup' %}">HERE!</a>.</p>
+
+<!-- The Start Game Button -->
+<a href="{% url 'game' %}" class="start-btn">Start Game</a>
 
 {% endblock content %}

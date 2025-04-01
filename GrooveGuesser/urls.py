@@ -7,6 +7,9 @@ urlpatterns = [
     path('about', views.about, name="about"),
     path('game/', views.game, name='game'),
     path('user/', include('user.urls')),
+    path('audio-player/', views.audio_player, name='audio-player'),
+    path('leaderboard', views.leaderboard, name="leaderboard"),
+
     path('leaderboard', views.leaderboard, name="leaderboard"),
     #user registration app
     # path('register',views.registerview, name="register"),
@@ -16,7 +19,12 @@ urlpatterns = [
     # NEW ADDITION
     path('signup/', views.signup, name='signup'),
 
+<<<<<<< HEAD
+=======
+    path('logout', views.logout, name='logout'),
+>>>>>>> b74fe029316426114f754627bccf7f83f7dbb5e8
 
 
     #user login app
+
 ]

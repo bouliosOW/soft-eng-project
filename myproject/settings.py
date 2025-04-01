@@ -120,9 +120,10 @@ USE_TZ = True
 import os
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles')  
-]
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+
+
 
 
 
@@ -131,7 +132,6 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+YOUTUBE_API_KEY = "AIzaSyBGtJwlTS-Jm9sq7kdqgXi9gesZJ8pqzh8"
 
-SPOTIFY_CLIENT_ID = 'db3c06cdb81d494c9e232cebdfd1de06'
-SPOTIFY_CLIENT_SECRET = '05553b7772b04f04b672f39c991b744a'
-
+YOUTUBE_API_KEY = 'AIzaSyBGtJwlTS-Jm9sq7kdqgXi9gesZJ8pqzh8'
