@@ -9,13 +9,13 @@
     {% if username %}
         <p>You are currently logged in as: {{ username }}</p>
         <p>Would you like to enter as yourself, or play a practice game?</p>
-        <a href="{% url 'game' %}?data={{ username }}">Play as Self</a>
-        <a href="{% url 'game' %}?data=p">Play Practice Game</a>
+        <a class="action-btn" href="{% url 'game' %}?data={{ username }}">Play as Self</a>
+        <a class="action-btn" href="{% url 'game' %}?data=p">Play Practice Game</a>
     {% else %}
         <p>You are not logged in with any account!</p>
         <p>Would you like to log in as yourself, or play a practice game?</p>
-        <a href="{% url 'user.login' %}">Log in</a>
-        <a href="{% url 'game' %}?data=p">Play Practice Game</a>
+        <a class="action-btn" href="{% url 'user.login' %}">Log in</a>
+        <a class="action-btn" href="{% url 'game' %}?data=p">Play Practice Game</a>
     {% endif %}
 </div>
 

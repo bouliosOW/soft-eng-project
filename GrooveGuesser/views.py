@@ -17,7 +17,7 @@ def index(request):
     # return HttpResponse("Hello, Welcome to the GrooveGuesser app.") (WIP PF)
     template_data = {}
     template_data['title'] = "Home Page"
-    username = request.session.get('username')
+    username = request.session.get('username', '')
     return render(request, 'GrooveGuesser.html', {
         'template_data': template_data,
         'username': username
@@ -27,7 +27,7 @@ def about(request):
     # return HttpResponse("GrooveGuesser is a song guessing game.") (WIP PF)
     template_data = {}
     template_data['title'] = "About"
-    username = request.session.get('username')
+    username = request.session.get('username', '')
     return render(request, 'about.html', {
         'template_data': template_data,
         'username': username
@@ -43,9 +43,11 @@ def game(request):
                 Song(title="Vitrual Insanity", artist="Jamiroquai", year=1996, album="Travelling Without Moving", path='\static\mp3s\Virtual-Insanity-Jamiroquai.mp3')]
     
     song=random.choice(songList)
+    username = request.session.get('username', '')
     return render(request, 'game.html', {
         'template_data': template_data,
-        'song': song
+        'song': song,
+        'username': username
     })
 
 
@@ -104,12 +106,14 @@ def signup(request):
     template_data = {}
     template_data['title'] = "Sign Up"
     accounts = Account.objects.all()
+    username = request.session.get('username', '')
 
     accounts_json = serialize('json', accounts) if accounts.exists() else '[]'
 
     return render(request, 'signup.html', {
         'template_data': template_data,
-        'accounts': accounts_json
+        'accounts': accounts_json,
+        'username': username
     })
 
 

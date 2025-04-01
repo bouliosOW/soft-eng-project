@@ -29,7 +29,7 @@ def users(request):
     template_data = {}
     template_data['title'] = 'Sign Up'
     form = forms.SignUpForm()
-    username = request.session.get('username')
+    username = request.session.get('username', '')
     return render(request, 'user/users.html', {
         'template_data': template_data,
         'form': form,
@@ -41,7 +41,7 @@ def login(request):
     template_data['title'] = 'Log In'
     accounts = Account.objects.all()
     form = forms.LoginForm()
-    username = request.session.get('username')
+    username = request.session.get('username', '')
     return render(request, 'user/login.html', {
         'template_data': template_data,
         'accounts': accounts,
@@ -81,7 +81,7 @@ def get_new_user(request):
 
 
 def userHome(request):
-    username = request.session.get('username')
+    username = request.session.get('username', '')
     # password = request.session.get('password')
     accounts = Account.objects.all()
     return render(request, 'user/userHome.html', {'username': username, 'accounts': accounts})
