@@ -6,26 +6,23 @@
 <h1 style="color: #61302b;">Groove Guesser</h1>
 <p style="color: #61302b;">Guess the song!</p>
 
-{{ song.title }}
+<h2 class="text-white">{{ song.title }}</h2>
 
 <audio controls id="audio-player">
     <source id="audio-source" src={{ song.path }} type="audio/mpeg">
 </audio>
 
 
-<div>
+<div class="button-group">
     <button class="btn btn-primary" onclick="playAudio()">Play</button>
-    <br>
     <button class="btn btn-primary" onclick="pauseAudio()">Pause</button>
-    <br>
     <button class="btn btn-primary" onclick="stopAudio()">Stop</button>
-    <br>
     <button class="btn btn-primary" onclick="restartAudio()">Restart</button>
 </div>
 
 
 
-<form action="" onsubmit="checkAnswers(event)" style="border: 3px solid red;" class="m-4 p-4">
+<form action="" onsubmit="checkAnswers(event)" style="border: 3px solid red;" class="m-4 p-4 form-box">
     <div class="mb-2">
         <label for="title">What is the song's title?</label>
         <input type="text" id="title">

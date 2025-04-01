@@ -9,6 +9,7 @@ from django.shortcuts import render
 from .models import Song
 from user.models import Account #This should give this file access to the model Account in \user\models.py
 from .models import Round
+from django.core.serializers import serialize
 
 #grooveguesser test responses
 def index(request):
@@ -81,12 +82,20 @@ def leaderboard(request):
 
 def audio_player(request):
     return render(request, 'audio_player.html')
+
+
+
 # NEW ADDITION
 def signup(request):
     template_data = {}
     template_data['title'] = "Sign Up"
+    accounts = Account.objects.all()
+
+    accounts_json = serialize('json', accounts) if accounts.exists() else '[]'
+
     return render(request, 'signup.html', {
-        'template_data': template_data
+        'template_data': template_data,
+        'accounts': accounts_json
     })
 
 #registration app (WIP PF)

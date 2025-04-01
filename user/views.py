@@ -4,9 +4,10 @@ from django.shortcuts import render, redirect
 import requests
 import json
 from .forms import SignUpForm, LoginForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from . import forms
 from .models import Account
+from django.contrib import messages
 
 
 '''
@@ -52,11 +53,21 @@ def get_new_user(request):
         if form.is_valid():
             #print("crash:", "out")
             # UPDATE DATABASE HERE
-            Account.objects.create(username = form.cleaned_data["username"], password = form.cleaned_data["password"])
-            return redirect('user.login')
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+
+            if Account.objects.filter(username=username).exists():  # Check if username exists
+                # messages.error(request, "This username is already taken.")
+                return JsonResponse({"success": False, "message": "This username is already taken."}, status=400)
+                    ## redirect('user.signup')
+            
+
+            Account.objects.create(username = username, password = password)
+            return JsonResponse({'success': True}, status=200) 
+                ## redirect('user.login')
         else:
-            print("Form errors:", form.errors) 
-            return redirect('user.signup')  
+            return JsonResponse({'success': False, 'message': form.errors}, status=400)
+                # redirect('user.signup')  
     
     
     return render(request, 'users.html', {'form': form})
