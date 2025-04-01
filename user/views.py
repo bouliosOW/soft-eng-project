@@ -103,7 +103,7 @@ def user_enter(request):
             print("Form errors:", form.errors)
             return redirect('user.login')
     
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'user/login.html', {'form': form})
 
 
 def playerGame(request):

@@ -12,7 +12,6 @@
     <source id="audio-source" src={{ song.path }} type="audio/mpeg">
 </audio>
 
-
 <div>
     <button class="btn btn-primary" onclick="playAudio()">Play</button>
     <br>
@@ -22,8 +21,6 @@
     <br>
     <button class="btn btn-primary" onclick="restartAudio()">Restart</button>
 </div>
-
-
 
 <form action="" onsubmit="checkAnswers(event)" style="border: 3px solid red;" class="m-4 p-4">
     <div class="mb-2">
@@ -44,21 +41,16 @@
     <button class="btn btn-danger" type="submit">Guess that Groove!</button>
 </form>
 
-
-
 <div style="border: 3px solid red;" class="m-4 p-4">
     <p id="titleGuess">{{guesses.title}}</p>
     <p id="artistGuess">{{guesses.artist}}</p>
     <p id="yearGuess">{{guesses.year}}</p>
 </div>
 
-
 <script>
     const audioPlayer = document.getElementById("audio-player")
     const audioSource = document.getElementById('audio-source')
     audioPlayer.style.display = "none"
-
-    const test = "Please"
 
     const song = {
         title: "{{ song.title|escapejs }}",
@@ -84,7 +76,6 @@
         }
     });
 
-
     function playAudio() {
         audioPlayer.play()
     }
@@ -102,7 +93,6 @@
         audioPlayer.currentTime = 0
         audioPlayer.style.display = 'block'
     }
-
 
     let guessed = false
 
@@ -135,33 +125,22 @@
 
         time += 5
     }
-
-    
-
 </script>
 
-<<<<<<< HEAD
-    {% if playerName %}
-        <p>Hello, <strong>{{ playerName }}</strong>!</p>
-    {% else %}
-=======
-    <p>This is |{{ username }}| username</p>
-    <p>This is |{{ practice }}| practice</p>
+{% if playerName %}
+    <p>Hello, <strong>{{ playerName }}</strong>!</p>
+{% elif username != '' %}
+    <p>Hello {{ username }}!</p>
+{% else %}
+    <p>This is a practice game.</p>
+{% endif %}
 
-    {% if practice %}
->>>>>>> 5d60d617e38ce0c1c9edf3d8edd1632b89c8e69a
-        <p>This is a practice game.</p>
-    {% elif username != '' %}
-        <p>Hello {{ username }}!</p>
-    {% endif %}
+<p>Learn more about GrooveGuesser <a href="{% url 'about' %}">HERE!</a></p>
 
-    <p>Learn more about GrooveGuesser <a href="{% url 'about' %}">HERE!</a></p>
+<p>If you want to log into your account, or create a new account,  
+    click <a href="{% url 'user.signup' %}">HERE!</a>.</p>
 
-    <p>If you want to log into your account, or create a new account,  
-        click <a href="{% url 'user.signup' %}">HERE!</a>.</p>
-
-    <!-- The Start Game Button -->
-    <a href="{% url 'game' %}" class="start-btn">Start Game</a>
-</div>
+<!-- The Start Game Button -->
+<a href="{% url 'game' %}" class="start-btn">Start Game</a>
 
 {% endblock content %}
