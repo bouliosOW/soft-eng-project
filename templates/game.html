@@ -6,7 +6,7 @@
 <h1 style="color: #61302b;">Groove Guesser</h1>
 <p style="color: #61302b;">Guess the song!</p>
 
-{{ song.title }}
+<h2 class="text-white">{{ song.title }}</h2>
 
 <audio controls id="audio-player">
     <source id="audio-source" src={{ song.path }} type="audio/mpeg">
@@ -16,11 +16,8 @@
 <div>
     <p></p>
     <button class="btn btn-primary" onclick="playAudio()">Play</button>
-    <br>
     <button class="btn btn-primary" onclick="pauseAudio()">Pause</button>
-    <br>
     <button class="btn btn-primary" onclick="stopAudio()">Stop</button>
-    <br>
     <button class="btn btn-primary" onclick="restartAudio()">Restart</button>
 </div>
 
@@ -45,8 +42,6 @@
     <button class="btn btn-danger" type="submit">Guess that Groove!</button>
 </form>
 
-
-
 <div style="border: 3px solid red;" class="m-4 p-4">
     <p id="attempts">{{attempts}}</p>
     <p id="titleGuess">{{guesses.title}}</p>
@@ -55,13 +50,10 @@
     <p id="score">{{score}}</p>
 </div>
 
-
 <script>
     const audioPlayer = document.getElementById("audio-player")
     const audioSource = document.getElementById('audio-source')
     audioPlayer.style.display = "none"
-
-    const test = "Please"
 
     const song = {
         title: "{{ song.title|escapejs }}",
@@ -171,19 +163,20 @@
 
 </script>
 
-    {% if playerName %}
-        <p>Hello, <strong>{{ playerName }}</strong>!</p>
-    {% else %}
-        <p>This is a practice game.</p>
-    {% endif %}
+{% if playerName %}
+    <p>Hello, <strong>{{ playerName }}</strong>!</p>
+{% elif username != '' %}
+    <p>Hello {{ username }}!</p>
+{% else %}
+    <p>This is a practice game.</p>
+{% endif %}
 
-    <p>Learn more about GrooveGuesser <a href="{% url 'about' %}">HERE!</a></p>
+<p>Learn more about GrooveGuesser <a href="{% url 'about' %}">HERE!</a></p>
 
-    <p>If you want to log into your account, or create a new account,  
-        click <a href="{% url 'user.signup' %}">HERE!</a>.</p>
+<p>If you want to log into your account, or create a new account,  
+    click <a href="{% url 'user.signup' %}">HERE!</a>.</p>
 
-    <!-- The Start Game Button -->
-    <a href="{% url 'game' %}" class="start-btn">Start Game</a>
-</div>
+<!-- The Start Game Button -->
+<a href="{% url 'game' %}" class="start-btn">Start Game</a>
 
 {% endblock content %}

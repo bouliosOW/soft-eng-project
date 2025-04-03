@@ -19,6 +19,7 @@ urlpatterns = [
     # NEW ADDITION
     path('signup/', views.signup, name='signup'),
 
+    path('logout', views.logout, name='logout'),
 
 
     #user login app
