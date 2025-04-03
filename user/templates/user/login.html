@@ -2,17 +2,29 @@
 {% block content %}
 {% load static %}
 
-    <h1>LOGIN</h1>
-    <p>
-        This is the login page for GrooveGuesser. <br>
-        If you do not yet have an account, then head to the sign up page.
-        <a href="{% url 'user.signup' %}">Return to Sign Up Page</a>
+    <div class="signup-page-container">
+        <h1 class="page-title">Welcome to Groove Guesser</h1>
+        <p>This is the login page for GrooveGuesser.</p>
+        
 
-        <form action="{% url 'user.user_enter' %}" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Submit">
-        </form>
+        <div class="signup-login-box">
+            <div class="form-box">
+                <form action="{% url 'user.user_enter' %}" method="post">
+                    {% csrf_token %}
+                    <!-- {{ form }} -->
+                    <input id="username" type="text" name="username" placeholder="Username" required>
+                    <input id="password" type="password" name="password" placeholder="Password" required>
+                    <label for="" class="text-danger bg-white my-2"></label>
+                    <button type="submit" class="action-btn">Log In</button>
+                </form>
+            </div>
+
+            <div class="form-box">
+                <h2>Haven't Made an Account Yet?</h2>
+                <p>Head Over to the Sign Up Page</p>
+                <a href="{% url 'user.signup' %}" class="action-btn alt-btn">Sign Up</a>
+            </div>
+        </div>
 
         {% for account in accounts %}
             <p>Username: {{ account.username }}</p>
@@ -20,8 +32,13 @@
             <p>Joined: {{ account.join_date }}</p>
         {% endfor %}
 
-    </p>
+    </div>
 
+
+
+    <script>
+        const loginForm = document.querySelector('form')
+    </script>
     
 
 {% endblock content %}

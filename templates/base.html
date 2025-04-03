@@ -37,7 +37,7 @@
                         <a class="nav-link" href="{% url 'index' %}">Main Menu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'game' %}">Game</a>
+                        <a class="nav-link" href="{% url 'pregame' %}">Game</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'about' %}">About</a>
@@ -48,6 +48,18 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'leaderboard' %}">Leaderboard</a>
                     </li>
+
+                    {% if username %}
+                        <li class="nav-item">
+                            <a href="{% url 'user.userHome' %}" class="nav-link">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <p>Hello, {{ username }}!</p>
+                        </li>
+                        <li class="nav-item">
+                            <button class="action-btn" onclick="logout()">Log Out</button>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
