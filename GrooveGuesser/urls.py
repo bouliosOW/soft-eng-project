@@ -19,10 +19,10 @@ urlpatterns = [
     # NEW ADDITION
     path('signup/', views.signup, name='signup'),
 
-<<<<<<< HEAD
-=======
     path('logout', views.logout, name='logout'),
->>>>>>> b74fe029316426114f754627bccf7f83f7dbb5e8
+    
+    #NEW ADD
+    path('login', views.logout, name='login'),
 
 
     #user login app

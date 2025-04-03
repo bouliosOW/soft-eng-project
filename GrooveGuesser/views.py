@@ -81,8 +81,6 @@ def leaderboard(request):
         'username': username
     })
 
-<<<<<<< HEAD
-=======
 
 # This used to be in leaderboard, creates errors without Round model
 # <!--  All Rounds Played -->
@@ -98,7 +96,6 @@ def leaderboard(request):
 def audio_player(request):
     return render(request, 'audio_player.html')
 
->>>>>>> b74fe029316426114f754627bccf7f83f7dbb5e8
 # NEW ADDITION
 def signup(request):
     template_data = {}
@@ -107,8 +104,13 @@ def signup(request):
         'template_data': template_data
     })
 
-<<<<<<< HEAD
-=======
+# NEW ADDITION
+def login(request):
+    template_data = {}
+    template_data['title'] = "Log In"
+    return render(request, 'login.html', {
+        'template_data': template_data
+    })
 
 def logout(request):
     del request.session["username"]
@@ -116,7 +118,6 @@ def logout(request):
     return redirect(reverse("user.login"))
 
 
->>>>>>> b74fe029316426114f754627bccf7f83f7dbb5e8
 #registration app (WIP PF)
 # def registerview(request):
 #     form = UserCreationForm()
