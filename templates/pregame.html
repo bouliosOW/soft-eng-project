@@ -1,22 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% load static %}
+<div class="container">
+    <h1>Pregame Setup</h1>
+    <p>Choose your preferred music category before starting the game:</p>
+    
+    <form method="get" action="{% url 'game' %}">
+        <div class="btn-group" role="group">
+            <button type="submit" name="category" value="all" class="btn btn-primary">All</button>
+            <button type="submit" name="category" value="80s" class="btn btn-secondary">80s</button>
+            <button type="submit" name="category" value="90s" class="btn btn-secondary">90s</button>
+            <button type="submit" name="category" value="2000s" class="btn btn-secondary">2000s</button>
+        </div>
 
-<div class="pregame-container">
-    <h1 class="page-title">Prepare for Your Game</h1>
+        <br><br>
+        <label for="practice">Practice Mode:</label>
+        <input type="checkbox" id="practice" name="data" value="p">
 
-    {% if username %}
-        <p>You are currently logged in as: {{ username }}</p>
-        <p>Would you like to enter as yourself, or play a practice game?</p>
-        <a class="action-btn" href="{% url 'game' %}?data={{ username }}">Play as Self</a>
-        <a class="action-btn" href="{% url 'game' %}?data=p">Play Practice Game</a>
-    {% else %}
-        <p>You are not logged in with any account!</p>
-        <p>Would you like to log in as yourself, or play a practice game?</p>
-        <a class="action-btn" href="{% url 'user.login' %}">Log in</a>
-        <a class="action-btn" href="{% url 'game' %}?data=p">Play Practice Game</a>
+        <br><br>
+        <a href="{% url 'index' %}" class="btn btn-light">Back to Home</a>
+    </form>
+
+    {% if practice %}
+        <p>You are in practice mode!</p>
     {% endif %}
 </div>
-
 {% endblock content %}
