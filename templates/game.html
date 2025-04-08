@@ -126,8 +126,8 @@
             yearGuess: document.getElementById("year").value
         }
 
-        guesses.title = formData.titleGuess == song.title
-        guesses.artist = formData.artistGuess == song.artist
+        guesses.title = transformMe(String(formData.titleGuess)) == transformMe(String(song.title))
+        guesses.artist = transformMe(String(formData.artistGuess)) == transformMe(String(song.artist))
         guesses.year = formData.yearGuess == song.year
 
         
@@ -159,6 +159,17 @@
         }
     }
 
+
+    function transformMe(me) {
+        let new_me = me.trim()
+
+        const punctuation = ['!', ',', '\'', '/', '.', '?', '-']
+        for(let i = 0; i < punctuation.length; i++) {
+            new_me.replace(punctuation[i], '')
+        }
+
+        return new_me
+    }
     
 
 </script>

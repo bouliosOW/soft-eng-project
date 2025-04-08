@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('path', models.CharField(max_length=100)),
             ],
         ),
-        migrations.DeleteModel(
-            name='Account',
-        ),
+        # migrations.DeleteModel(
+        #     name='Account',
+        # ),
     ]
