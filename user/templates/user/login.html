@@ -38,6 +38,72 @@
 
     <script>
         const loginForm = document.querySelector('form')
+
+        var accounts = JSON.parse('{{ accounts_json|safe }}' || '[]') 
+
+        var label = document.querySelector('label')
+
+        loginForm.addEventListener('submit', function(event) {
+            let username = document.getElementById('username').value
+            let password = document.getElementById('password').value
+
+            // CALL VIEW FOR PASSWORD CHECKING HERE, SHOULD REDIRECT TO LOGIN SCREEN IF TRUE
+            // IF THE PASSWORD FAILED THE TEST, CAN MODIFY TO 
+            // IF NOT, CAN MAKE A NEW VIEW TO RETURN RESULT OF LOGIN CHECK AND CAN DISPLAY
+            // OR CAN DO THE CHECK WITH JAVASCRIPT AND ONLY CALL VIEW TO MAKE ACCOUNT/REDIRECT TO LOGIN IF PASSES TEST
+            // FOR THAT I'D HAVE TO CHANGE THE VIEW FOR SIGNUP TO GIVE ME ACCESS TO ALL ACCOUNTS AND CHECK IF UNIQUE
+
+            if (username.length > 15 || username.length < 3) {
+                event.preventDefault()
+                label.textContent = "The username must be 3-15 characters in length (inclusive)."
+            }
+            else if (password.length > 20 || password.length < 5) {
+                event.preventDefault()
+                label.textContent = "The password must be 3-20 characters in length (inclusive)."
+            }
+            else {
+                event.preventDefault()
+
+                // FROM CHAT -------------------------------
+
+                let formData = new FormData(this); // Create FormData object
+
+                fetch("{% url 'user.user_enter' %}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value // Get CSRF token
+                    },
+                    body: formData // Send form data
+                })
+                .then(response => {
+                    console.log("Response Object:", response); // This only logs metadata
+                    return response.clone().text(); // Read the raw response body as text first
+                })
+                .then(rawText => {
+                    console.log("Raw Response Text:", rawText); // Now check if this contains JSON or an error message
+                    return JSON.parse(rawText); // Convert manually to JSON
+                })
+                .then(data => {
+                    console.log("Data:", data)
+                    console.log("success?:", data.success)
+                    console.log("message:", data.message)
+                    if(data.success) {
+                        window.location.href = "{% url 'user.userHome' %}"
+                        console.log("Success")
+                    }
+                    else {
+                        label.textContent = data.message
+                        console.log("Found:", data.message)
+                    }
+                })
+                .catch(error => {
+                    label.textContent = "An Error Has Occured. Please Try Again."
+                    console.log("error:", error)
+                })
+            }
+            
+            
+        })
     </script>
     
 

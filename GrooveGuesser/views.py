@@ -35,6 +35,7 @@ def about(request):
 def game(request):
     template_data = {}
     template_data['title'] = "Game"
+<<<<<<< HEAD
     songList = [
         Song(title="Life is a Highway", artist="Tom Cochrane", year=1991, album="Mad Mad World", path='/static/mp3s/LifeIsAHighwayTomCochrane.mp3', category="90s"),
         Song(title="All Star", artist="Smash Mouth", year=1999, album="Astro Lounge", path='/static/mp3s/All-Star-Smash-Mouth.mp3', category="90s"),
@@ -44,6 +45,13 @@ def game(request):
         
         Song(title="Virtual Insanity", artist="Jamiroquai", year=1996, album="Travelling Without Moving", path='/static/mp3s/Virtual-Insanity-Jamiroquai.mp3', category="90s"),
     ]
+=======
+    songList = [Song(title="Life is a Highway", artist="Tom Cochrane", year=1991, album="Mad Mad World", path='\static\mp3s\LifeIsAHighwayTomCochrane.mp3'),
+                Song(title="All Star", artist="Smash Mouth", year=1999, album="Astro Lounge", path='\static\mp3s\All-Star-Smash-Mouth.mp3'),
+                Song(title="Everybody Wants to Rule the World", artist="Tears for Fears", year=1985, album="Songs from the Big Chair", path='\static\mp3s\Everybody-Wants-To-Rule-The-World-Tears-For-Fears.mp3'),
+                Song(title="I'm Still Standing", artist="Elton John", year=1983, album="Too Low for Zero", path='\static\mp3s\Im-Still-Standing-Elton-John.mp3'),
+                Song(title="Virtual Insanity", artist="Jamiroquai", year=1996, album="Travelling Without Moving", path='\static\mp3s\Virtual-Insanity-Jamiroquai.mp3')]
+>>>>>>> 3b983043b026e6af20d23d7e363238aeb9111cfd
     
     category = request.GET.get('category', 'all')
 
