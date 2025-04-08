@@ -8,6 +8,8 @@ class Song(models.Model):
     year = models.IntegerField()
     album = models.CharField(max_length=100)
     path = models.CharField(max_length=100)
+    category = models.CharField(max_length=50)
+
 
 
 
