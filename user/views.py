@@ -92,23 +92,32 @@ def user_enter(request):
         form = LoginForm(request.POST)
 
         if form.is_valid():
-            account = Account.objects.filter(username= form.cleaned_data["username"], password = form.cleaned_data["password"])
+
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+
+
+            account = Account.objects.filter(username = username, password = password)
             
             if account:
                 # username = request.POST.get('username')
                 # password = request.POST.get('password')
 
                 # request.session['account'] = account
-                request.session['username'] = form.cleaned_data["username"]
+                request.session['username'] = username
 
                 # account_data = list(account.values())
                 # request.session['account'] = account_data
 
-                return redirect('user.userHome')
+                return JsonResponse({'success': True}, status=200) 
+            
+            else:
+                return JsonResponse({'success': False, 'message': "This account does not exist. Please try a different username or password."}, status=400)
         
         else:
-            print("Form errors:", form.errors)
-            return redirect('user.login')
+            # print("Form errors:", form.errors)
+            # return redirect('user.login')
+            return JsonResponse({'success': False, 'message': form.errors}, status=400)
     
     return render(request, 'user/login.html', {'form': form})
 

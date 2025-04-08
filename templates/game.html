@@ -20,7 +20,7 @@
 <!--  Guessing Area -->
 <div class="guessing-section">
     <!--  Guess Form -->
-    <form onsubmit="checkAnswers(event)" class="guess-form form-box">
+    <form onsubmit="calculateScore(event)" class="guess-form form-box">
         <div class="mb-2">
             <label for="title">🎼 What is the song's title?</label>
             <input type="text" id="title" placeholder="Enter song title">
@@ -36,12 +36,12 @@
         <button class="action-btn" type="submit">🎯 Guess that Groove!</button>
     </form>
 
-    <!--  Results -->
-    <div class="guess-results">
-    <p id="titleGuess">🎼 Title: ...</p>
-    <p id="artistGuess">🧑‍🎤 Artist: ...</p>
-    <p id="yearGuess">📅 Year: ...</p>
-</div>
+<div style="border: 3px solid red;" class="m-4 p-4">
+    <p id="attempts">{{attempts}}</p>
+    <p id="titleGuess">{{guesses.title}}</p>
+    <p id="artistGuess">{{guesses.artist}}</p>
+    <p id="yearGuess">{{guesses.year}}</p>
+    <p id="score">{{score}}</p>
 </div>
 
 <a href="{% url 'game' %}" class="start-btn">🚀 Start Another Game</a>
@@ -77,6 +77,8 @@
         audioPlayer.pause();
     }
 
+    function playAudio() {audioPlayer.play()}
+    function pauseAudio() {audioPlayer.pause()}
     function stopAudio() {
         audioPlayer.pause();
         audioPlayer.style.display = 'none';
@@ -91,8 +93,29 @@
     const aG = document.getElementById("artistGuess");
     const yG = document.getElementById("yearGuess");
 
+    let guesses = {
+        title: false,
+        artist: false,
+        year: false
+    }
+
+    let multipliers = {
+        title: [1.25, 1.15, 1.1, 1],
+        artist: [1.2, 1.1, 1.05, 1],
+        year: [1.5, 1.4, 1.3, 1],
+        bonus: [1.2, 1.15, 1.1, 1]
+    }
+    let roundGuessed = {
+        title: 1,
+        artist: 1,
+        year: 1
+    }
+    let attempts = 0;
+    
+    
     function checkAnswers(event) {
-        event.preventDefault();
+        attempts++;
+        event.preventDefault()
 
         const title = document.getElementById("title").value.trim().toLowerCase();
         const artist = document.getElementById("name").value.trim().toLowerCase();
@@ -109,7 +132,32 @@
         yG.textContent = `📅 Year: ${guesses.year ? "✅ Correct!" : "❌ Incorrect"}`;
 
         time += 5;
+        
+
+        if (guesses.title == false) roundGuessed.title += 1
+        if (guesses.artist == false) roundGuessed.artist += 1
+        if (guesses.year == false) roundGuessed.year += 1
     }
+    
+    function calculateScore(event)
+    {
+        if (attempts < 3)
+        {
+            checkAnswers(event)
+        }
+        else
+        {
+            let nameM = multipliers.title[roundGuessed.title];
+            let artistM = multipliers.artist[roundGuessed.artist];;
+            let yearM = multipliers.year[roundGuessed.year];
+            let bonusM = 1;
+            let finalMultiplier = (nameM * bonusM) * (artistM * bonusM) * (yearM * bonusM);
+            let score = 1000 * finalMultiplier;
+        }
+    }
+
+    
+
 </script>
 
 {% endblock content %}
