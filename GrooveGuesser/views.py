@@ -10,14 +10,13 @@ from django.shortcuts import render
 from .models import Song
 from user.models import Account #This should give this file access to the model Account in \user\models.py
 from .models import Round
-from django.core.serializers import serialize
 
 #grooveguesser test responses
 def index(request):
     # return HttpResponse("Hello, Welcome to the GrooveGuesser app.") (WIP PF)
     template_data = {}
     template_data['title'] = "Home Page"
-    username = request.session.get('username', '')
+    username = request.session.get('username')
     return render(request, 'GrooveGuesser.html', {
         'template_data': template_data,
         'username': username
@@ -27,7 +26,7 @@ def about(request):
     # return HttpResponse("GrooveGuesser is a song guessing game.") (WIP PF)
     template_data = {}
     template_data['title'] = "About"
-    username = request.session.get('username', '')
+    username = request.session.get('username')
     return render(request, 'about.html', {
         'template_data': template_data,
         'username': username
@@ -36,36 +35,39 @@ def about(request):
 def game(request):
     template_data = {}
     template_data['title'] = "Game"
-    songList = [Song(title="Life is a Highway", artist="Tom Cochrane", year=1991, album="Mad Mad World", path='\static\mp3s\LifeIsAHighwayTomCochrane.mp3'),
-                Song(title="All Star", artist="Smash Mouth", year=1999, album="Astro Lounge", path='\static\mp3s\All-Star-Smash-Mouth.mp3'),
-                Song(title="Everybody Wants to Rule the World", artist="Tears for Fears", year=1985, album="Songs from the Big Chair", path='\static\mp3s\Everybody-Wants-To-Rule-The-World-Tears-For-Fears.mp3'),
-                Song(title="I'm Still Standing", artist="Elton John", year=1983, album="Too Low for Zero", path='\static\mp3s\Im-Still-Standing-Elton-John.mp3'),
-                Song(title="Vitrual Insanity", artist="Jamiroquai", year=1996, album="Travelling Without Moving", path='\static\mp3s\Virtual-Insanity-Jamiroquai.mp3')]
+    songList = [
+        Song(title="Life is a Highway", artist="Tom Cochrane", year=1991, album="Mad Mad World", path='/static/mp3s/LifeIsAHighwayTomCochrane.mp3', category="90s"),
+        Song(title="All Star", artist="Smash Mouth", year=1999, album="Astro Lounge", path='/static/mp3s/All-Star-Smash-Mouth.mp3', category="90s"),
+
+        Song(title="Everybody Wants to Rule the World", artist="Tears for Fears", year=1985, album="Songs from the Big Chair", path='/static/mp3s/Everybody-Wants-To-Rule-The-World-Tears-For-Fears.mp3', category="80s"),
+        Song(title="I'm Still Standing", artist="Elton John", year=1983, album="Too Low for Zero", path='/static/mp3s/Im-Still-Standing-Elton-John.mp3', category="80s"),
+        
+        Song(title="Virtual Insanity", artist="Jamiroquai", year=1996, album="Travelling Without Moving", path='/static/mp3s/Virtual-Insanity-Jamiroquai.mp3', category="90s"),
+    ]
     
-    song=random.choice(songList)
-    username = request.session.get('username', '')
+    category = request.GET.get('category', 'all')
+
+    # Filter songs by category if specified
+    if category != 'all':
+        songList = [song for song in songList if song.category == category]
+
+    song = random.choice(songList) if songList else None
     return render(request, 'game.html', {
         'template_data': template_data,
-        'song': song,
-        'username': username
+        'song': song
     })
+
 
 
 def pregame(request):
     template_data = {}
-    template_data['title'] = "Game"
-    
-    practice = False
-    data = request.GET.get('data')
-    username = request.session.get('username', '')
-    if data == 'p':
-        practice = True
-
+    template_data['title'] = "Pregame"
+    categories = ["80s", "90s", "2000s", "all"]
     return render(request, 'pregame.html', {
         'template_data': template_data,
-        'username': username,
-        'practice': practice
+        'categories': categories
     })
+
 
     
 
@@ -99,21 +101,12 @@ def leaderboard(request):
 def audio_player(request):
     return render(request, 'audio_player.html')
 
-
-
 # NEW ADDITION
 def signup(request):
     template_data = {}
     template_data['title'] = "Sign Up"
-    accounts = Account.objects.all()
-    username = request.session.get('username', '')
-
-    accounts_json = serialize('json', accounts) if accounts.exists() else '[]'
-
     return render(request, 'signup.html', {
-        'template_data': template_data,
-        'accounts': accounts_json,
-        'username': username
+        'template_data': template_data
     })
 
 
