@@ -2,109 +2,79 @@
 {% block content %}
 {% load static %}
 
-    <div class="signup-page-container">
-        <h1 class="page-title">Welcome to Groove Guesser</h1>
-        <p>This is the login page for GrooveGuesser.</p>
-        
+<div class="info-text">
+    <h1>LOG IN</h1>
+    <p class="text-white">Log in page for GrooveGuesser. Log in to keep track of your points and compete against others by guessing that groove!</p>
+</div>
 
-        <div class="signup-login-box">
-            <div class="form-box">
-                <form action="{% url 'user.user_enter' %}" method="post">
-                    {% csrf_token %}
-                    <!-- {{ form }} -->
-                    <input id="username" type="text" name="username" placeholder="Username" required>
-                    <input id="password" type="password" name="password" placeholder="Password" required>
-                    <label for="" class="text-danger bg-white my-2"></label>
-                    <button type="submit" class="action-btn">Log In</button>
-                </form>
-            </div>
-
-            <div class="form-box">
-                <h2>Haven't Made an Account Yet?</h2>
-                <p>Head Over to the Sign Up Page</p>
-                <a href="{% url 'user.signup' %}" class="action-btn alt-btn">Sign Up</a>
-            </div>
-        </div>
-
-        {% for account in accounts %}
-            <p>Username: {{ account.username }}</p>
-            <p>Password: {{ account.password }}</p>
-            <p>Joined: {{ account.join_date }}</p>
-        {% endfor %}
-
+<div class="signup-login-box">
+    <div class="form-box">
+        <form action="{% url 'user.user_enter' %}" method="post">
+            {% csrf_token %}
+            <!-- {{ form }} -->
+            <h1 class="text-white">Log In Here</h1>
+            <input id="username" type="text" name="username" placeholder="Username" required>
+            <input id="password" type="password" name="password" placeholder="Password" required>
+            <label for="" class="text-danger bg-white my-2"></label>
+            <button type="submit" class="action-btn">Log In</button>
+        </form>
     </div>
 
+    <div class="form-box">
+        <h1 class="text-white">Make An Account</h1>
+        <p class="text-white">Head Over to the Sign Up Page</p>
+        <a href="{% url 'signup' %}" class="action-btn alt-btn">Sign Up</a>
+    </div>
+</div>
 
+<script>
+    const loginForm = document.querySelector('form');
+    const accounts = JSON.parse('{{ accounts_json|safe }}' || '[]');
+    const label = document.querySelector('label');
 
-    <script>
-        const loginForm = document.querySelector('form')
+    loginForm.addEventListener('submit', function(event) {
+        let username = document.getElementById('username').value;
+        let password = document.getElementById('password').value;
 
-        var accounts = JSON.parse('{{ accounts_json|safe }}' || '[]') 
+        if (username.length > 15 || username.length < 3) {
+            event.preventDefault();
+            label.textContent = "The username must be 3-15 characters in length (inclusive).";
+        } else if (password.length > 20 || password.length < 5) {
+            event.preventDefault();
+            label.textContent = "The password must be 3-20 characters in length (inclusive).";
+        } else {
+            event.preventDefault();
 
-        var label = document.querySelector('label')
-
-        loginForm.addEventListener('submit', function(event) {
-            let username = document.getElementById('username').value
-            let password = document.getElementById('password').value
-
-            // CALL VIEW FOR PASSWORD CHECKING HERE, SHOULD REDIRECT TO LOGIN SCREEN IF TRUE
-            // IF THE PASSWORD FAILED THE TEST, CAN MODIFY TO 
-            // IF NOT, CAN MAKE A NEW VIEW TO RETURN RESULT OF LOGIN CHECK AND CAN DISPLAY
-            // OR CAN DO THE CHECK WITH JAVASCRIPT AND ONLY CALL VIEW TO MAKE ACCOUNT/REDIRECT TO LOGIN IF PASSES TEST
-            // FOR THAT I'D HAVE TO CHANGE THE VIEW FOR SIGNUP TO GIVE ME ACCESS TO ALL ACCOUNTS AND CHECK IF UNIQUE
-
-            if (username.length > 15 || username.length < 3) {
-                event.preventDefault()
-                label.textContent = "The username must be 3-15 characters in length (inclusive)."
-            }
-            else if (password.length > 20 || password.length < 5) {
-                event.preventDefault()
-                label.textContent = "The password must be 3-20 characters in length (inclusive)."
-            }
-            else {
-                event.preventDefault()
-
-                // FROM CHAT -------------------------------
-
-                let formData = new FormData(this); // Create FormData object
-
-                fetch("{% url 'user.user_enter' %}", {
-                    method: "POST",
-                    headers: {
-                        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value // Get CSRF token
-                    },
-                    body: formData // Send form data
-                })
-                .then(response => {
-                    console.log("Response Object:", response); // This only logs metadata
-                    return response.clone().text(); // Read the raw response body as text first
-                })
-                .then(rawText => {
-                    console.log("Raw Response Text:", rawText); // Now check if this contains JSON or an error message
-                    return JSON.parse(rawText); // Convert manually to JSON
-                })
-                .then(data => {
-                    console.log("Data:", data)
-                    console.log("success?:", data.success)
-                    console.log("message:", data.message)
-                    if(data.success) {
-                        window.location.href = "{% url 'user.userHome' %}"
-                        console.log("Success")
-                    }
-                    else {
-                        label.textContent = data.message
-                        console.log("Found:", data.message)
-                    }
-                })
-                .catch(error => {
-                    label.textContent = "An Error Has Occured. Please Try Again."
-                    console.log("error:", error)
-                })
-            }
-            
-            
-        })
-    </script>
-    
+            let formData = new FormData(this);
+            fetch("{% url 'user.user_enter' %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+                },
+                body: formData
+            })
+            .then(response => {
+                console.log("Response Object:", response);
+                return response.clone().text();
+            })
+            .then(rawText => {
+                console.log("Raw Response Text:", rawText);
+                return JSON.parse(rawText);
+            })
+            .then(data => {
+                console.log("Data:", data)
+                if (data.success) {
+                    window.location.href = "{% url 'user.userHome' %}";
+                } else {
+                    label.textContent = data.message;
+                }
+            })
+            .catch(error => {
+                label.textContent = "An Error Has Occurred. Please Try Again.";
+                console.log("error:", error);
+            });
+        }
+    });
+</script>
 
 {% endblock content %}
