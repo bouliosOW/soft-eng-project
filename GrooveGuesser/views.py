@@ -83,7 +83,11 @@ def game(request):
     Song(title="MELTDOWN", artist="Travis Scott", year=2023, album="", path='/static/mp3s/rap caviar/Travis Scott - MELTDOWN (Official Audio) ft. Drake.mp3', category="rap caviar"),
 
     ]
+<<<<<<< HEAD
         
+=======
+    
+>>>>>>> feature/Websites
     category = request.GET.get('category', 'all')
 
     # Filter songs by category if specified
@@ -148,6 +152,13 @@ def signup(request):
         'template_data': template_data
     })
 
+# NEW ADDITION
+def login(request):
+    template_data = {}
+    template_data['title'] = "Log In"
+    return render(request, 'login.html', {
+        'template_data': template_data
+    })
 
 def logout(request):
     del request.session["username"]
