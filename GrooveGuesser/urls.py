@@ -21,6 +21,8 @@ urlpatterns = [
 
     path('logout', views.logout, name='logout'),
 
+    path('add_round', views.add_round, name='add_round')
+
 
     #user login app
 

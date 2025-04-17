@@ -21,7 +21,13 @@
                 {% for account in accounts %}
                     <tr>
                         <td>{{ account.username }}</td>
-                        <td>{{ account.average_score|default:0 }}</td>
+                        <td>
+                            {% for entry in avg_scores %}
+                                {% if entry.username == account.username %}
+                                    {{ entry.average }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
                         <td>{{ account.join_date }}</td>
                     </tr>
                 {% empty %}
@@ -40,7 +46,30 @@
         <p><strong>Score:</strong> {{ gameRound.score }}</p>
     </div>
 
+     <!--  All Rounds Played -->
+         <h2 class="section-title">All Rounds Played</h2>
+         <div class="info-box">
+             {% for round in allRounds %}
+                 <p><strong>{{ round.player }}</strong>: {{ round.score }}</p>
+             {% empty %}
+                 <p class="empty-message">No rounds played yet.</p>
+             {% endfor %}
+         </div>
+
     
 </div>
+
+
+
+
+<script>
+    // const avgScores = JSON.parse(document.getElementById("avg-scores").textContent);
+
+    // document.querySelectorAll("[data-username]").forEach(row => {
+    //     const username = row.dataset.username;
+    //     const avg = avgScores[username] ?? "N/A";
+    //     row.querySelector(".avg-score").textContent = avg;
+    // });
+</script>
 
 {% endblock content %}

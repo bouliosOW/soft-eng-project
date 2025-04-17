@@ -3,6 +3,8 @@
 {% block content %}
 {% load static %}
 
+<meta name="csrf-token" content="{{ csrf_token }}">
+
 <h1 style="color: #61302b;">Groove Guesser</h1>
 <p style="color: #61302b;">Guess the song!</p>
 
@@ -39,7 +41,8 @@
         <input type="number" id="year">
     </div>
     <br>
-    <button class="btn btn-danger" type="submit">Guess that Groove!</button>
+    <button class="btn btn-danger" id="submit" type="submit">Guess that Groove!</button>
+    <label for="submit"></label>
 </form>
 
 <div style="border: 3px solid red;" class="m-4 p-4">
@@ -54,6 +57,8 @@
     const audioPlayer = document.getElementById("audio-player")
     const audioSource = document.getElementById('audio-source')
     audioPlayer.style.display = "none"
+
+    let label = document.querySelector("label")
 
     const song = {
         title: "{{ song.title|escapejs }}",
@@ -156,6 +161,39 @@
             let bonusM = 1;
             let finalMultiplier = (nameM * bonusM) * (artistM * bonusM) * (yearM * bonusM);
             let score = 1000 * finalMultiplier;
+
+            round_data = {
+                'score': score
+            }
+
+            fetch("{% url 'add_round' %}", {
+                method: "POST",
+                headers: {
+                    'Content-Type': "application/json",
+                    'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content,
+                },
+                body: JSON.stringify(round_data)
+            })
+            .then(response => {
+                console.log("Response Object:", response)
+                return response.clone().text()
+            })
+            .then(rawText => {
+                console.log("Raw Response Text:", rawText)
+                return JSON.parse(rawText)
+            })
+            .then(data => {
+                console.log("Data:", data)
+                console.log("success?:", data.success)
+
+                if(data.success) {
+                    console.log("Success")
+                }
+                else {
+                    label.textContent = data.message
+                    console.log("Found:", data.message)
+                }
+            })
         }
     }
 
@@ -173,6 +211,8 @@
     
 
 </script>
+
+
 
 {% if playerName %}
     <p>Hello, <strong>{{ playerName }}</strong>!</p>

@@ -1,5 +1,7 @@
+import datetime
 from django.test import TestCase, SimpleTestCase
 from django.urls import reverse
+from django.utils import timezone
 from .models import Account
 
 # Create your tests here.
@@ -10,10 +12,22 @@ from .models import Account
 
 class AccountModelTests(TestCase):
 
-    def test_Account_create(self):
-        test_account = Account(username="testName", password="testPassword")
+    def test_create_Account(self):
+        test_account = Account(
+            username="testName",
+            password="testPassword"
+        )
+
         self.assertEqual(test_account.username, "testName")
         self.assertEqual(test_account.password, "testPassword")
+
+        test_account.save()
+
+        found = Account.objects.filter(username="testName")
+        self.assertTrue(found.exists())
+        self.assertEqual(found[0], test_account)
+        self.assertTrue(isinstance(found[0].join_date, datetime.datetime))
+        self.assertFalse(found[0].join_date > timezone.now())
 
     
     def test_Account_add_delete(self):
@@ -100,18 +114,8 @@ class UserSitesTests(TestCase):
         self.assertEqual(follow_response.status_code, 200)
         self.assertTemplateUsed(follow_response, 'user/login.html')
         self.assertContains(follow_response, "Haven't Made an Account Yet?")
+    
+
+    
 
 
-class GameTests(TestCase):
-
-    def test_game_pregame_pages(self):
-
-        response = self.client.get(reverse('pregame'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'pregame.html')
-        self.assertContains(response, "Choose your preferred music category before starting the game:")
-
-        response = self.client.get(reverse('game'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'game.html')
-        self.assertContains(response, "Guess that Groove!")

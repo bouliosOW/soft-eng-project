@@ -10,13 +10,14 @@ from django.shortcuts import render
 from .models import Song
 from user.models import Account #This should give this file access to the model Account in \user\models.py
 from .models import Round
+from django.db.models import Avg
 
 #grooveguesser test responses
 def index(request):
     # return HttpResponse("Hello, Welcome to the GrooveGuesser app.") (WIP PF)
     template_data = {}
     template_data['title'] = "Home Page"
-    username = request.session.get('username')
+    username = request.session.get('username', '')
     return render(request, 'GrooveGuesser.html', {
         'template_data': template_data,
         'username': username
@@ -26,7 +27,7 @@ def about(request):
     # return HttpResponse("GrooveGuesser is a song guessing game.") (WIP PF)
     template_data = {}
     template_data['title'] = "About"
-    username = request.session.get('username')
+    username = request.session.get('username', '')
     return render(request, 'about.html', {
         'template_data': template_data,
         'username': username
@@ -35,7 +36,6 @@ def about(request):
 def game(request):
     template_data = {}
     template_data['title'] = "Game"
-<<<<<<< HEAD
     songList = [
         Song(title="Life is a Highway", artist="Tom Cochrane", year=1991, album="Mad Mad World", path='/static/mp3s/LifeIsAHighwayTomCochrane.mp3', category="90s"),
         Song(title="All Star", artist="Smash Mouth", year=1999, album="Astro Lounge", path='/static/mp3s/All-Star-Smash-Mouth.mp3', category="90s"),
@@ -45,13 +45,6 @@ def game(request):
         
         Song(title="Virtual Insanity", artist="Jamiroquai", year=1996, album="Travelling Without Moving", path='/static/mp3s/Virtual-Insanity-Jamiroquai.mp3', category="90s"),
     ]
-=======
-    songList = [Song(title="Life is a Highway", artist="Tom Cochrane", year=1991, album="Mad Mad World", path='\static\mp3s\LifeIsAHighwayTomCochrane.mp3'),
-                Song(title="All Star", artist="Smash Mouth", year=1999, album="Astro Lounge", path='\static\mp3s\All-Star-Smash-Mouth.mp3'),
-                Song(title="Everybody Wants to Rule the World", artist="Tears for Fears", year=1985, album="Songs from the Big Chair", path='\static\mp3s\Everybody-Wants-To-Rule-The-World-Tears-For-Fears.mp3'),
-                Song(title="I'm Still Standing", artist="Elton John", year=1983, album="Too Low for Zero", path='\static\mp3s\Im-Still-Standing-Elton-John.mp3'),
-                Song(title="Virtual Insanity", artist="Jamiroquai", year=1996, album="Travelling Without Moving", path='\static\mp3s\Virtual-Insanity-Jamiroquai.mp3')]
->>>>>>> 3b983043b026e6af20d23d7e363238aeb9111cfd
     
     category = request.GET.get('category', 'all')
 
@@ -59,10 +52,12 @@ def game(request):
     if category != 'all':
         songList = [song for song in songList if song.category == category]
 
+    username = request.session.get('username', '')
     song = random.choice(songList) if songList else None
     return render(request, 'game.html', {
         'template_data': template_data,
-        'song': song
+        'song': song,
+        'username': username
     })
 
 
@@ -71,9 +66,11 @@ def pregame(request):
     template_data = {}
     template_data['title'] = "Pregame"
     categories = ["80s", "90s", "2000s", "all"]
+    username = request.session.get('username', '')
     return render(request, 'pregame.html', {
         'template_data': template_data,
-        'categories': categories
+        'categories': categories,
+        'username': username
     })
 
 
@@ -86,12 +83,29 @@ def leaderboard(request):
     newRound = Round(player="newplayer", score=1)
     allRounds = Round.objects.all()
     username = request.session.get('username', '')
+
+    avg_scores = []
+
+    for account in accounts:
+        theirRounds = Round.objects.filter(player=account.username)
+
+        sum_scores = sum(round.score for round in theirRounds)
+
+        average_score = sum_scores / len(theirRounds) if theirRounds else 0
+
+        avg_scores.append({
+            'username': account.username,
+            'average': round(average_score, 2)
+        })
+    
+
     return render(request, 'leaderboard.html', {
         'template_data': template_data,
         'accounts': accounts,
         'gameRound': newRound,
         'allRounds': allRounds,
-        'username': username
+        'username': username,
+        'avg_scores': avg_scores,
     })
 
 
@@ -113,8 +127,10 @@ def audio_player(request):
 def signup(request):
     template_data = {}
     template_data['title'] = "Sign Up"
+    username = request.session.get('username', '')
     return render(request, 'signup.html', {
-        'template_data': template_data
+        'template_data': template_data,
+        'username': username,
     })
 
 
@@ -128,3 +144,18 @@ def logout(request):
 # def registerview(request):
 #     form = UserCreationForm()
 #     return render(request, "users/registers.html", { "form": form })
+
+
+def add_round(request):
+    if request.method == 'POST':
+        username = request.session.get('username', '')
+
+        if username != '':
+            Round.objects.create(player=username, score=10)
+            return JsonResponse({'success': True, 'roundFor': username}, 200)
+        else:
+            return JsonResponse({'success': True}, 200)
+    
+    else:
+        return JsonResponse({'success': False}, 400)
+
