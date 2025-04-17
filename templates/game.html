@@ -12,7 +12,6 @@
     <source id="audio-source" src={{ song.path }} type="audio/mpeg">
 </audio>
 
-
 <div>
     <p></p>
     <button class="btn btn-primary" onclick="playAudio()">Play</button>
@@ -20,8 +19,6 @@
     <button class="btn btn-primary" onclick="stopAudio()">Stop</button>
     <button class="btn btn-primary" onclick="restartAudio()">Restart</button>
 </div>
-
-
 
 <form action="" onsubmit="calculateScore(event)" style="border: 3px solid red;" class="m-4 p-4">
     <div class="mb-2">
@@ -31,7 +28,7 @@
     <br>
     <div class="mb-2">
         <label for="name">What is the artist's name?</label>
-        <input type="text" id="name">
+        <input type="text" id="artist">
     </div>
     <br>
     <div class="mb-2">
@@ -79,7 +76,6 @@
         }
     });
 
-
     function playAudio() {audioPlayer.play()}
     function pauseAudio() {audioPlayer.pause()}
     function stopAudio() {
@@ -122,24 +118,29 @@
 
         let formData = {
             titleGuess: document.getElementById("title").value,
-            artistGuess: document.getElementById("artist"),
+            artistGuess: document.getElementById("artist").value,
             yearGuess: document.getElementById("year").value
         }
 
-        guesses.title = formData.titleGuess == song.title
-        guesses.artist = formData.artistGuess == song.artist
-        guesses.year = formData.yearGuess == song.year
+        const artistGuess = formData.artistGuess.trim().toLowerCase();
+        const correctArtist = song.artist.trim().toLowerCase();
 
-        
+        console.log("Artist Guess: '" + artistGuess + "'");
+        console.log("Correct Artist: '" + correctArtist + "'");
 
-        tG.textContent = guesses.title
-        aG.textContent = guesses.artist
-        yG.textContent = guesses.year
+        guesses.title = formData.titleGuess.toLowerCase() === song.title.toLowerCase();
+        guesses.artist = artistGuess === correctArtist;
+        guesses.year = parseInt(formData.yearGuess, 10) === song.year;
 
-        time += 5
-        if (guesses.title == false) roundGuessed.title += 1
-        if (guesses.artist == false) roundGuessed.artist += 1
-        if (guesses.year == false) roundGuessed.year += 1
+    
+        tG.textContent = guesses.title;
+        aG.textContent = guesses.artist;
+        yG.textContent = guesses.year;
+
+        time += 5;
+        if (guesses.title == false) roundGuessed.title += 1;
+        if (guesses.artist == false) roundGuessed.artist += 1;
+        if (guesses.year == false) roundGuessed.year += 1;
     }
     
     function calculateScore(event)
@@ -151,16 +152,13 @@
         else
         {
             let nameM = multipliers.title[roundGuessed.title];
-            let artistM = multipliers.artist[roundGuessed.artist];;
+            let artistM = multipliers.artist[roundGuessed.artist];
             let yearM = multipliers.year[roundGuessed.year];
             let bonusM = 1;
             let finalMultiplier = (nameM * bonusM) * (artistM * bonusM) * (yearM * bonusM);
             let score = 1000 * finalMultiplier;
         }
     }
-
-    
-
 </script>
 
 {% if playerName %}
@@ -176,7 +174,7 @@
 <p>If you want to log into your account, or create a new account,  
     click <a href="{% url 'user.signup' %}">HERE!</a>.</p>
 
-<!-- The Start Game Button -->
+<!--start button-->    
 <a href="{% url 'game' %}" class="start-btn">Start Game</a>
 
 {% endblock content %}
