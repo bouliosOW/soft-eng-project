@@ -12,7 +12,6 @@
     <source id="audio-source" src={{ song.path }} type="audio/mpeg">
 </audio>
 
-
 <div>
     <p></p>
     <button class="btn btn-primary" onclick="playAudio()">Play</button>
@@ -21,8 +20,6 @@
     <button class="btn btn-primary" onclick="restartAudio()">Restart</button>
 </div>
 
-
-
 <form action="" onsubmit="calculateScore(event)" style="border: 3px solid red;" class="m-4 p-4">
     <div class="mb-2">
         <label for="title">What is the song's title?</label>
@@ -30,7 +27,11 @@
     </div>  
     <br>
     <div class="mb-2">
+<<<<<<< HEAD
+        <label for="name">What is the artist's name?</label>
+=======
         <label for="artist">What is the artist's name?</label>
+>>>>>>> origin/release
         <input type="text" id="artist">
     </div>
     <br>
@@ -81,7 +82,6 @@
         }
     });
 
-
     function playAudio() {audioPlayer.play()}
     function pauseAudio() {audioPlayer.pause()}
     function stopAudio() {
@@ -131,12 +131,29 @@
         console.log(yG)
 
         let formData = {
+<<<<<<< HEAD
+            titleGuess: document.getElementById("title").value,
+            artistGuess: document.getElementById("artist").value,
+            yearGuess: document.getElementById("year").value
+=======
             titleGuess: document.getElementById("title"),
             artistGuess: document.getElementById("artist"),
             yearGuess: document.getElementById("year")
+>>>>>>> origin/release
         }
         console.log(formData.titleGuess.value)
 
+<<<<<<< HEAD
+        const artistGuess = formData.artistGuess.trim().toLowerCase();
+        const correctArtist = song.artist.trim().toLowerCase();
+
+        console.log("Artist Guess: '" + artistGuess + "'");
+        console.log("Correct Artist: '" + correctArtist + "'");
+
+        guesses.title = formData.titleGuess.toLowerCase() === song.title.toLowerCase();
+        guesses.artist = artistGuess === correctArtist;
+        guesses.year = parseInt(formData.yearGuess, 10) === song.year;
+=======
         if(formData.titleGuess.value == song.title)
         {
             tG.textContent = "You've guessed the title correctly!"
@@ -158,11 +175,17 @@
         } 
         else yG.textContent = "Try guessing the year again!"
         
+>>>>>>> origin/release
 
-        time += 5
-        if (guesses.title == false) roundGuessed.title += 1
-        if (guesses.artist == false) roundGuessed.artist += 1
-        if (guesses.year == false) roundGuessed.year += 1
+    
+        tG.textContent = guesses.title;
+        aG.textContent = guesses.artist;
+        yG.textContent = guesses.year;
+
+        time += 5;
+        if (guesses.title == false) roundGuessed.title += 1;
+        if (guesses.artist == false) roundGuessed.artist += 1;
+        if (guesses.year == false) roundGuessed.year += 1;
     }
     
     function calculateScore(event)
@@ -173,6 +196,14 @@
         }
         else if (attempts == 2)
         {
+<<<<<<< HEAD
+            let nameM = multipliers.title[roundGuessed.title];
+            let artistM = multipliers.artist[roundGuessed.artist];
+            let yearM = multipliers.year[roundGuessed.year];
+            let bonusM = 1;
+            let finalMultiplier = (nameM * bonusM) * (artistM * bonusM) * (yearM * bonusM);
+            let score = 1000 * finalMultiplier;
+=======
             checkAnswers(event)
             //event.preventDefault()
             if(guesses.title || guesses.artist || guesses.year)
@@ -200,6 +231,7 @@
             }
             
             attempts++;
+>>>>>>> origin/release
         }
         else{
             
@@ -207,9 +239,6 @@
         attempts++;
         
     }
-
-    
-
 </script>
 
 {% if playerName %}
@@ -225,7 +254,7 @@
 <p>If you want to log into your account, or create a new account,  
     click <a href="{% url 'user.signup' %}">HERE!</a>.</p>
 
-<!-- The Start Game Button -->
+<!--start button-->    
 <a href="{% url 'game' %}" class="start-btn">Start Game</a>
 
 {% endblock content %}
