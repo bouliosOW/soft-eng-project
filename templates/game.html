@@ -196,14 +196,6 @@
         }
         else if (attempts == 2)
         {
-<<<<<<< HEAD
-            let nameM = multipliers.title[roundGuessed.title];
-            let artistM = multipliers.artist[roundGuessed.artist];
-            let yearM = multipliers.year[roundGuessed.year];
-            let bonusM = 1;
-            let finalMultiplier = (nameM * bonusM) * (artistM * bonusM) * (yearM * bonusM);
-            let score = 1000 * finalMultiplier;
-=======
             checkAnswers(event)
             //event.preventDefault()
             if(guesses.title || guesses.artist || guesses.year)
@@ -231,7 +223,6 @@
             }
             
             attempts++;
->>>>>>> origin/release
         }
         else{
             
