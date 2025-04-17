@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<<<<<<< HEAD
 <div class="container">
     <h1>Pregame Setup</h1>
     <p>Choose your preferred music category before starting the game:</p>
@@ -18,18 +19,36 @@
             <button type="submit" name="category" value="late night drive" class="btn btn-secondary">late night drive</button>
             <button type="submit" name="category" value="rave mix" class="btn btn-secondary">rave mix</button>
             <button type="submit" name="category" value="throwback" class="btn btn-secondary">throwback</button>
+=======
+<div class="info-text pregame-container" style="display: flex; flex-direction: column; align-items: center;">
+    <h1 class="page-title">🎧 Ready to Groove?</h1>
+    <p style="max-width: 700px; text-align: center;">Select your music vibe and choose whether to play for real or just practice!</p>
+
+    <form method="get" action="{% url 'game' %}" class="form-box" style="margin-top: 30px; width: 100%; max-width: 500px;">
+        <!-- Genre Selection -->
+        <h2 style="color: #fff; text-align: center; margin-bottom: 20px;">Choose A Category</h2>
+        <div class="button-group" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 15px;">
+            <button type="submit" name="category" value="all" class="start-btn">All</button>
+            <button type="submit" name="category" value="80s" class="start-btn">80s</button>
+            <button type="submit" name="category" value="90s" class="start-btn">90s</button>
+            <button type="submit" name="category" value="2000s" class="start-btn">2000s</button>
+>>>>>>> origin/release
         </div>
 
-        <br><br>
-        <label for="practice">Practice Mode:</label>
-        <input type="checkbox" id="practice" name="data" value="p">
+        <!-- Practice Toggle -->
+        <div style="text-align: center; margin-top: 30px;">
+            <label for="practice" style="font-size: 1.3rem; color: #fff;">🎯 Practice Mode:</label>
+            <input type="checkbox" id="practice" name="data" value="p" style="transform: scale(1.5); margin-left: 10px;">
+        </div>
 
-        <br><br>
-        <a href="{% url 'index' %}" class="btn btn-light">Back to Home</a>
+        <!-- Navigation -->
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="{% url 'index' %}" class="action-btn">🏠 Back to Home</a>
+        </div>
     </form>
 
     {% if practice %}
-        <p>You are in practice mode!</p>
+        <p style="margin-top: 20px; font-size: 1.2rem; color: #fff;">🎓 You're in practice mode! No pressure, just vibes.</p>
     {% endif %}
 </div>
 {% endblock content %}

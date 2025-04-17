@@ -184,7 +184,11 @@ def game(request):
     Song(title="Violent Crimes", artist="Kanye West", year=2018, album="", path='/static/mp3s/latenightdrive/violent.mp3', category="late night drive"),
 
     ]
+<<<<<<< HEAD
         
+=======
+    
+>>>>>>> feature/Websites
     category = request.GET.get('category', 'all')
 
     # Filter songs by category if specified
@@ -249,6 +253,13 @@ def signup(request):
         'template_data': template_data
     })
 
+# NEW ADDITION
+def login(request):
+    template_data = {}
+    template_data['title'] = "Log In"
+    return render(request, 'login.html', {
+        'template_data': template_data
+    })
 
 def logout(request):
     del request.session["username"]

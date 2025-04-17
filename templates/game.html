@@ -27,13 +27,17 @@
     </div>  
     <br>
     <div class="mb-2">
+<<<<<<< HEAD
         <label for="name">What is the artist's name?</label>
+=======
+        <label for="artist">What is the artist's name?</label>
+>>>>>>> origin/release
         <input type="text" id="artist">
     </div>
     <br>
     <div class="mb-2">
         <label for="year">What year was this song released?</label>
-        <input type="number" id="year">
+        <input type="text" id="year">
     </div>
     <br>
     <button class="btn btn-danger" type="submit">Guess that Groove!</button>
@@ -51,13 +55,14 @@
     const audioPlayer = document.getElementById("audio-player")
     const audioSource = document.getElementById('audio-source')
     audioPlayer.style.display = "none"
+    
 
     const song = {
-        title: "{{ song.title|escapejs }}",
+        title:  "{{ song.title|escapejs }}",
         artist: "{{ song.artist|escapejs }}",
-        year: "{{ song.year|escapejs }}",
-        album: "{{ song.album|escapejs}}",
-        path: "{{ song.path|escapejs }}"
+        year:   "{{ song.year|escapejs }}",
+        album:  "{{ song.album|escapejs}}",
+        path:   "{{ song.path|escapejs }}"
     };
     song.year = parseInt(song.year, 10)
 
@@ -68,37 +73,34 @@
         pauseAudio()
     }
     let time = 5
+    
 
     audioPlayer.addEventListener("timeupdate", function () {
         if (audioPlayer.currentTime >= time) {
             audioPlayer.pause();  // Stop at 10 seconds
-            audioPlayer.currentTime = 0;  // Reset to the beginning
+            audioPlayer.currentTime = 15;  // Reset to the beginning
         }
     });
 
     function playAudio() {audioPlayer.play()}
     function pauseAudio() {audioPlayer.pause()}
     function stopAudio() {
-        audioPlayer.pause()
+             audioPlayer.pause()
+    }
+    function restartAudio() {
+             audioPlayer.currentTime = 15
     }
 
-    function restartAudio() {
-        audioPlayer.currentTime = 0
-    }
 
     let guessed = false
 
-    let guesses = {
-        title: false,
-        artist: false,
-        year: false
-    }
+
 
     let multipliers = {
-        title: [1.25, 1.15, 1.1, 1],
-        artist: [1.2, 1.1, 1.05, 1],
-        year: [1.5, 1.4, 1.3, 1],
-        bonus: [1.2, 1.15, 1.1, 1]
+        title:  [1.25, 1.15, 1.1, 1],
+        artist:  [1.2, 1.1, 1.05, 1],
+        year:     [1.5, 1.4, 1.3, 1],
+        bonus:   [1.2, 1.15, 1.1, 1]
     }
     let roundGuessed = {
         title: 1,
@@ -106,22 +108,42 @@
         year: 1
     }
     let attempts = 0;
-    
+    let score = document.getElementById("score");
 
     let tG = document.getElementById("titleGuess")
     let aG = document.getElementById("artistGuess")
     let yG = document.getElementById("yearGuess")
+
+    
+    let guesses = {
+        title: false,
+        artist: false,
+        year: false
+    }
+
     
     function checkAnswers(event) {
-        attempts++;
+        
         event.preventDefault()
 
+        console.log(tG)
+        console.log(aG)
+        console.log(yG)
+
         let formData = {
+<<<<<<< HEAD
             titleGuess: document.getElementById("title").value,
             artistGuess: document.getElementById("artist").value,
             yearGuess: document.getElementById("year").value
+=======
+            titleGuess: document.getElementById("title"),
+            artistGuess: document.getElementById("artist"),
+            yearGuess: document.getElementById("year")
+>>>>>>> origin/release
         }
+        console.log(formData.titleGuess.value)
 
+<<<<<<< HEAD
         const artistGuess = formData.artistGuess.trim().toLowerCase();
         const correctArtist = song.artist.trim().toLowerCase();
 
@@ -131,6 +153,29 @@
         guesses.title = formData.titleGuess.toLowerCase() === song.title.toLowerCase();
         guesses.artist = artistGuess === correctArtist;
         guesses.year = parseInt(formData.yearGuess, 10) === song.year;
+=======
+        if(formData.titleGuess.value == song.title)
+        {
+            tG.textContent = "You've guessed the title correctly!"
+            guesses.title = true;
+        } 
+        else tG.textContent = "Try guessing the title again!"
+        
+        if(formData.artistGuess.value == song.artist)
+        {
+            aG.textContent = "You've guessed the artist correctly!"
+            guesses.artist = true;
+        } 
+        else aG.textContent = "Try guessing the artist again!"
+        
+        if(formData.yearGuess.value == song.year)
+        {
+            yG.textContent = "You've guessed the year correctly!"
+            guesses.year = true;
+        } 
+        else yG.textContent = "Try guessing the year again!"
+        
+>>>>>>> origin/release
 
     
         tG.textContent = guesses.title;
@@ -145,19 +190,54 @@
     
     function calculateScore(event)
     {
-        if (attempts < 3)
+        if (attempts < 2)
         {
             checkAnswers(event)
         }
-        else
+        else if (attempts == 2)
         {
+<<<<<<< HEAD
             let nameM = multipliers.title[roundGuessed.title];
             let artistM = multipliers.artist[roundGuessed.artist];
             let yearM = multipliers.year[roundGuessed.year];
             let bonusM = 1;
             let finalMultiplier = (nameM * bonusM) * (artistM * bonusM) * (yearM * bonusM);
             let score = 1000 * finalMultiplier;
+=======
+            checkAnswers(event)
+            //event.preventDefault()
+            if(guesses.title || guesses.artist || guesses.year)
+            {
+                //let nameM = multipliers.title[roundGuessed.title];
+                //let artistM = multipliers.artist[roundGuessed.artist];;
+                //let yearM = multipliers.year[roundGuessed.year];
+
+                let titleIndex = Math.min(roundGuessed.title, multipliers.title.length - 1);
+                let titleM = multipliers.title[titleIndex];
+                
+                let artistIndex = Math.min(roundGuessed.artist, multipliers.artist.length - 1);
+                let artistM = multipliers.title[artistIndex];
+                
+                let yearIndex = Math.min(roundGuessed.year, multipliers.year.length - 1);
+                let yearM = multipliers.title[yearIndex];
+
+                let bonusM = 1;
+                let finalMultiplier = (titleM * bonusM) * (artistM * bonusM) * (yearM * bonusM);
+                score.textContent = String("Your score is: " + (1000 * finalMultiplier).toFixed(2));         
+            }
+            else
+            {
+                score.textContent = String("Your score is " + 0);
+            }
+            
+            attempts++;
+>>>>>>> origin/release
         }
+        else{
+            
+        }
+        attempts++;
+        
     }
 </script>
 
