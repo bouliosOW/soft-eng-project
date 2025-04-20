@@ -53,9 +53,11 @@
         <label for="submit"></label>
     </form>
 
-    <div id="answer">
+    <div id="answer" class="text-center">
         <h1>The Song Was: </h1>
         <h2 class="text-white">{{ song.title }}</h2>
+        <h2 class="text-white">{{ song.artist }}</h2>
+        <h2 class="text-white">{{ song.year }}</h2>
     </div>
 
     <div class="m-4 p-4 guess-results">
@@ -68,7 +70,7 @@
 
 </div>
 
-<a href="{% url 'game' %}" class="start-btn">🚀 Start Another Game</a>
+<a href="{% url 'game' %}" class="start-btn mb-5">🚀 Start Another Game</a>
 
 
 <script>
@@ -84,7 +86,8 @@
         artist: "{{ song.artist|escapejs }}",
         year:   "{{ song.year|escapejs }}",
         album:  "{{ song.album|escapejs}}",
-        path:   "{{ song.path|escapejs }}"
+        path:   "{{ song.path|escapejs }}",
+        category: "{{ song.category|escapejs}}"
     };
     song.year = parseInt(song.year, 10)
 

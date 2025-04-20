@@ -190,6 +190,10 @@ def game(request):
     ]
 
     category = request.GET.get('category', 'all')
+    if request.session.get('category', "oogabooga") == "oogabooga":
+        request.session['category'] = category
+    else:
+        category = request.session.get('category', 'all')
 
     # Filter songs by category if specified
     if category != 'all':
@@ -208,7 +212,9 @@ def game(request):
 def pregame(request):
     template_data = {}
     template_data['title'] = "Pregame"
-    categories = ["80s", "90s", "2000s", "dad rock", "girl pop", "opium", "rap caviar", "all"]
+    categories = ["80s", "90s", "2000s", "dad rock", "girl pop", "opium", "rap caviar", "late night drive", "rave mix", "throwback", "all"]
+    if request.session.get('category', "oogabooga") != "oogabooga":
+        del request.session['category']
     username = request.session.get('username', '')
     return render(request, 'pregame.html', {
         'template_data': template_data,
@@ -315,7 +321,6 @@ def add_round(request):
             data = json.loads(request.body.decode('utf-8'))
             newScore = data.get('score', 0) 
             Round.objects.create(player=username, score=newScore)
-            pdb.set_trace()
             return JsonResponse({'success': True, 'roundFor': username}, 200)
         else:
             return JsonResponse({'success': True}, 200)
