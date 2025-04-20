@@ -5,16 +5,66 @@
 
 <div class="info-text">
     <h1>About</h1>
+
     <p>GrooveGuesser is currently in development for a Software Engineering class
         at Florida Southern College. The current developers are:</p>
 
-    <div class="dev-list">
+    <div class="dev-list mb-5">
         <div class="dev-name">Adam Boulos</div>
         <div class="dev-name">Matt Flammenspeck</div>
         <div class="dev-name">Patrick Fratus</div>
         <div class="dev-name">Colsen Hernandez</div>
         <div class="dev-name">Anderson Morris</div>
     </div>
+
+
+    <h2 class="my-5">How to play:</h2>
+    <p class="mb-4"> 
+        Hit the play button and listen to the mystery song!
+        You get three attempts to guess the title, artist, and year that the song came out.
+        If you guess one of the categories correctly, you get some points!
+        If you miss all three categories on each of the attempts, you lose.
+    </p>
+
+    <h2 class="my-5">Scoring guide:</h2>
+    <p>
+        If you lose the round, the score is 0.
+        Otherwise, the score is calculated by how many categories you guess, 
+        and which attempt you guess each category correct on!
+
+    </p>
+
+    <h2 class="my-5">Multipliers:</h2>
+    <p>
+        We calculate the score using multipliers that change with each attempt you guess.
+        <h4 style="text-align: left;">Title score multipliers:</h4>
+        <ul style="text-align: left;">
+                <li>Attempt 1 - 1.25</li>
+                <li>Attempt 2 - 1.15</li>
+                <li>Attempt 3 - 1.1</li>
+        </ul>
+        <h4 style="text-align: left;">Artist score multipliers:</h4>
+        <ul style="text-align: left;">
+                <li>Attempt 1 - 1.2</li>
+                <li>Attempt 2 - 1.1</li>
+                <li>Attempt 3 - 1.05</li>
+        </ul>
+        <h4 style="text-align: left;">Year score multipliers:</h4>
+        <ul style="text-align: left;">
+                <li>Attempt 1 - 1.5</li>
+                <li>Attempt 2 - 1.4</li>
+                <li>Attempt 3 - 1.3</li>
+        </ul>
+
+        We understand that knowing the exact year that a song came out is hard to guess.
+        That's why we've decided to make the multipliers for that category much higher,
+        so that those hardcore fans can get some high scores.
+
+        There's also a super secret bonus multiplier that you get for guessing all three categories!
+        
+    </p>
+
+    
 </div>
 
 {% endblock content %}

@@ -10,7 +10,7 @@
     <p>🎧 Listen To The Beat & Guess The Track!</p>
   </div>
 
-<!-- <h2 class="text-white">{{ song.title }}</h2> -->
+
 
 <audio controls id="audio-player">
     <source id="audio-source" src={{ song.path }} type="audio/mpeg">
@@ -53,6 +53,11 @@
         <label for="submit"></label>
     </form>
 
+    <div id="answer">
+        <h1>The Song Was: </h1>
+        <h2 class="text-white">{{ song.title }}</h2>
+    </div>
+
     <div class="m-4 p-4 guess-results">
         <p id="attempts">{{attempts}}</p>
         <p id="titleGuess">{{guesses.title}}</p>
@@ -70,6 +75,9 @@
     const audioPlayer = document.getElementById("audio-player")
     const audioSource = document.getElementById('audio-source')
     audioPlayer.style.display = "none"
+
+    const answer = document.getElementById('answer')
+    answer.style.display = 'none'
 
     const song = {
         title:  "{{ song.title|escapejs }}",
@@ -207,7 +215,8 @@
 
                 let bonusM = 1;
                 let finalMultiplier = (titleM * bonusM) * (artistM * bonusM) * (yearM * bonusM);
-                score.textContent = String("Your score is: " + (1000 * finalMultiplier).toFixed(2));    
+                score.textContent = String("Your score is: " + (1000 * finalMultiplier).toFixed(2));   
+                answer.style.display = 'block' 
                 
                 round_data = {
                     'score': parseInt(Math.floor(1000 * finalMultiplier))
@@ -216,6 +225,7 @@
             else
             {
                 score.textContent = String("Your score is " + 0);
+                answer.style.display = 'block' 
 
                 round_data = {
                     'score': 0
