@@ -2,7 +2,7 @@
 {% block content %}
 {% load static %}
 
-<div class="signup-page-container">
+<div class="info-text">
 
     <h1 class="page-title">Welcome to Groove Guesser</h1>
     <p class="info-text">Create a new account or log in to start guessing some tunes!</p>
@@ -10,7 +10,7 @@
     <div class="signup-login-box">
         <!-- Sign Up Form -->
         <div class="form-box">
-            <h2>Create Account</h2>
+            <h2 class="text-white">Create Account</h2>
             <form action="{% url 'signup' %}" method="post">
                 {% csrf_token %}
                 <input id="username" type="text" name="username" placeholder="Username" required>
@@ -22,14 +22,13 @@
 
         <!-- Login Redirect thing -->
         <div class="form-box">
-            <h2>Already Have an Account?</h2>
-            <p>Click below to log in:</p>
+            <h2 class="text-white">Already Have an Account?</h2>
+            <p class="text-white">Click below to log in:</p>
             <a href="{% url 'user.login' %}" class="action-btn alt-btn">Log In</a>
         </div>
     </div>
 
 </div>
-
 
 <script>
     const signupForm = document.querySelector('form')
@@ -42,12 +41,6 @@
         let username = document.getElementById('username').value
         let password = document.getElementById('password').value
 
-        // CALL VIEW FOR PASSWORD CHECKING HERE, SHOULD REDIRECT TO LOGIN SCREEN IF TRUE
-        // IF THE PASSWORD FAILED THE TEST, CAN MODIFY TO 
-        // IF NOT, CAN MAKE A NEW VIEW TO RETURN RESULT OF LOGIN CHECK AND CAN DISPLAY
-        // OR CAN DO THE CHECK WITH JAVASCRIPT AND ONLY CALL VIEW TO MAKE ACCOUNT/REDIRECT TO LOGIN IF PASSES TEST
-        // FOR THAT I'D HAVE TO CHANGE THE VIEW FOR SIGNUP TO GIVE ME ACCESS TO ALL ACCOUNTS AND CHECK IF UNIQUE
-
         if (username.length > 15 || username.length < 3) {
             event.preventDefault()
             label.textContent = "The username must be 3-15 characters in length (inclusive)."
@@ -59,36 +52,23 @@
         else {
             event.preventDefault()
 
-            // FROM CHAT -------------------------------
-
-            let formData = new FormData(this); // Create FormData object
+            let formData = new FormData(this);
 
             fetch("{% url 'user.get_new_user' %}", {
                 method: "POST",
                 headers: {
-                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value // Get CSRF token
+                    "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
                 },
-                body: formData // Send form data
+                body: formData
             })
-            .then(response => {
-                console.log("Response Object:", response); // This only logs metadata
-                return response.clone().text(); // Read the raw response body as text first
-            })
-            .then(rawText => {
-                console.log("Raw Response Text:", rawText); // Now check if this contains JSON or an error message
-                return JSON.parse(rawText); // Convert manually to JSON
-            })
+            .then(response => response.clone().text())
+            .then(rawText => JSON.parse(rawText))
             .then(data => {
-                console.log("Data:", data)
-                console.log("success?:", data.success)
-                console.log("message:", data.message)
                 if(data.success) {
                     window.location.href = "{% url 'user.login' %}"
-                    console.log("Success")
                 }
                 else {
                     label.textContent = data.message
-                    console.log("Found:", data.message)
                 }
             })
             .catch(error => {
@@ -96,9 +76,8 @@
                 console.log("error:", error)
             })
         }
-        
-        
     })
 </script>
 
 {% endblock content %}
+    

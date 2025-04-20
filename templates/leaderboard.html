@@ -3,7 +3,7 @@
 {% block content %}
 {% load static %}
 
-<div class="leaderboard-container">
+<div class="info-text">
     <!--  Main Title -->
     <h1 class="page-title">Leaderboard</h1>
 
@@ -39,37 +39,9 @@
         </table>
     </div>
 
-    <!--  Next Round -->
-    <h2 class="section-title">Next Round</h2>
-    <div class="info-box">
-        <p><strong>Player:</strong> {{ gameRound.player }}</p>
-        <p><strong>Score:</strong> {{ gameRound.score }}</p>
-    </div>
-
-     <!--  All Rounds Played -->
-         <h2 class="section-title">All Rounds Played</h2>
-         <div class="info-box">
-             {% for round in allRounds %}
-                 <p><strong>{{ round.player }}</strong>: {{ round.score }}</p>
-             {% empty %}
-                 <p class="empty-message">No rounds played yet.</p>
-             {% endfor %}
-         </div>
-
     
 </div>
 
 
-
-
-<script>
-    // const avgScores = JSON.parse(document.getElementById("avg-scores").textContent);
-
-    // document.querySelectorAll("[data-username]").forEach(row => {
-    //     const username = row.dataset.username;
-    //     const avg = avgScores[username] ?? "N/A";
-    //     row.querySelector(".avg-score").textContent = avg;
-    // });
-</script>
 
 {% endblock content %}

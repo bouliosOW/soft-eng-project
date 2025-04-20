@@ -4,17 +4,17 @@
 
     
 
-    <h1 id="GrooveTitle">Dashboard</h1>
+    <h1 id="GrooveTitle" class="page-title text-white">Dashboard</h1>
 
-    <div>
-        <h3 style="color: red; border: 5px solid red; border-radius: 20px; text-align: center;">Hello, {{ username }}!</h3>
+    <div class="info-text">
+        <h3 style="border: 5px solid red; border-radius: 20px; text-align: center;" class="info-text">Hello, {{ username }}!</h3>
         <!-- <a href="{% url 'user.login' %}" style="color: red;">LOG OUT</a> -->
         <br><br><br>
         
         {% for account in accounts %}
             {% if username == account.username %}
-                <h4 style="color: red;">Your Data:</h4>
-                <div style=" border: 3px solid red; border-radius: 10px; padding: 10px;">
+                <h3 style="color: red;">Your Data:</h3>
+                <div class="dev-name text-white" style=" border: 3px solid red; border-radius: 10px; padding: 10px;">
                     <p></p>
                     <p><strong>Username:</strong> {{ account.username }}</p>
                     <p><strong>Password:</strong> {{ account.password }}</p>
@@ -25,17 +25,28 @@
         <br><br>
 
         <h3 style="color: red;">Overall Game Performance</h3>
-        <div style=" border: 3px solid red; border-radius: 10px;">
+        <div class="dev-name text-white" style=" border: 3px solid red; border-radius: 10px;">
             <section style="margin-left: 15%; margin-top: 5%; margin-right: 15%; margin-bottom: 5%;">
-                This is where I would put my game stats...
-                If I had any!
+                {% if place == -1 %}
+                    This is where I would put my game stats...
+                    If I had any!
+                {% else %}
+                    You rank #{{ place }} out of all players!
+                    {% if place == 1 %}
+                        <br>
+                        Well done, Champ!
+                    {% endif %}
+                {% endif %}
             </section>
         </div>
         <br><br>
 
-        <h4 style="color: red;">Ready for another round?</h4>
+        <h4 class="text-white">Ready for another round?</h4>
         <div style="margin: 5%;">
-            <a href="{% url 'user.playGame' %}?data={{username}}" style="color: red;">Click Here to Start a New Game of GrooveGuesser!</a>
+            <a class="text-white" style="text-shadow: 0 0 10px rgba(255, 85, 85, 0.8);" 
+            href="{% url 'user.playGame' %}?data={{username}}">
+                Click Here to Start a New Game of GrooveGuesser!
+            </a>
         </div>
     </div>
     

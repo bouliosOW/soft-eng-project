@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.template import TemplateDoesNotExist
 import requests
 import json
+
+from grooveguesser.models import Round
 from .forms import SignUpForm, LoginForm
 from django.http import HttpResponseRedirect, JsonResponse
 from . import forms
@@ -84,7 +86,40 @@ def userHome(request):
     username = request.session.get('username', '')
     # password = request.session.get('password')
     accounts = Account.objects.all()
-    return render(request, 'user/userHome.html', {'username': username, 'accounts': accounts})
+
+    myScores = Round.objects.filter(player=username)
+    myAvg = sum(round.score for round in myScores) / len(myScores) if myScores else 0
+
+    if myAvg != 0:
+        avg_scores = []
+
+        for account in accounts:
+            theirRounds = Round.objects.filter(player=account.username)
+
+            sum_scores = sum(round.score for round in theirRounds)
+
+            average_score = sum_scores / len(theirRounds) if theirRounds else 0
+
+            avg_scores.append({
+                'username': account.username,
+                'average': round(average_score, 2)
+            })
+        
+        avgScores = sorted(avg_scores, key=lambda x: (-x['average']))
+
+        find = next((u for u in avgScores if u["username"] == username), None)
+        place = avgScores.index(find) + 1
+    else:
+        place = -1
+    
+
+    return render(request, 'user/userHome.html', {
+        'username': username, 
+        'accounts': accounts,
+        'myAvg': myAvg,
+        'place': place
+    })
+
 
 
 def user_enter(request):

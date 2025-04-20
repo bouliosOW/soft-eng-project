@@ -28,10 +28,8 @@ class AccountForm(ModelForm):
 '''
     ACCOUNTS ARE BEING CREATED!!!!! YAY
     Accounts List:
-        1. admin, test234, Feb. 11, 2025, 7:13 p.m.
-        2. admin123, test2344, Feb. 11, 2025, 7:14 p.m.
-        3. admin8, test8, Feb. 11, 2025, 7:15 p.m.
-        4. testaccount0, testaccount0, Feb. 11, 2025, 7:22 p.m.
+        1. admin8, test8, Feb. 11, 2025, 7:15 p.m.
+        2. CHaynes, 123456
 '''
 
 '''

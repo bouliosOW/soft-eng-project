@@ -14,7 +14,10 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
+
 <body>
+
+    <body onload="document.body.classList.add('fade-in')">
 
     <!--  Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
@@ -79,20 +82,6 @@
 
 <script>
   function logout() {
-    // fetch('logout', {
-    //   method: "POST",
-    //   headers: {
-    //         "X-CSRFToken": "{{ csrf_token }}",  // Required for Django security
-    //         "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({ action: "trigger" })
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     console.log("Response from Django:", data.message);
-    // })
-    // .catch(error => console.error("Error:", error));
-
 
     window.location.href = "{% url 'logout' %}";
 

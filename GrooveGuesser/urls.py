@@ -20,6 +20,9 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
 
     path('logout', views.logout, name='logout'),
+    
+    #NEW ADD
+    path('login', views.logout, name='login'),
 
     path('add_round', views.add_round, name='add_round')
 

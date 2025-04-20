@@ -5,67 +5,78 @@
 
 <meta name="csrf-token" content="{{ csrf_token }}">
 
-<h1 style="color: #61302b;">Groove Guesser</h1>
-<p style="color: #61302b;">Guess the song!</p>
+<div class="info-text">
+    <h1>🎵 Groove Guesser</h1>
+    <p>🎧 Listen To The Beat & Guess The Track!</p>
+  </div>
 
-<h2 class="text-white">{{ song.title }}</h2>
+<!-- <h2 class="text-white">{{ song.title }}</h2> -->
 
 <audio controls id="audio-player">
     <source id="audio-source" src={{ song.path }} type="audio/mpeg">
 </audio>
 
 
-<div>
-    <p></p>
-    <button class="btn btn-primary" onclick="playAudio()">Play</button>
-    <button class="btn btn-primary" onclick="pauseAudio()">Pause</button>
-    <button class="btn btn-primary" onclick="stopAudio()">Stop</button>
-    <button class="btn btn-primary" onclick="restartAudio()">Restart</button>
+<!--  Equalizer Animation -->
+<div class="equalizer">
+    <div></div><div></div><div></div><div></div><div></div>
+  </div>
+
+
+<!--  Control Buttons -->
+<div class="button-group">
+    <button class="start-btn" onclick="playAudio()">▶️ Play</button>
+    <button class="start-btn" onclick="pauseAudio()">⏸️ Pause</button>
+    <button class="start-btn" onclick="stopAudio()">⏹️ Stop</button>
+    <button class="start-btn" onclick="restartAudio()">🔁 Restart</button>
 </div>
 
 
 
-<form action="" onsubmit="calculateScore(event)" style="border: 3px solid red;" class="m-4 p-4">
-    <div class="mb-2">
-        <label for="title">What is the song's title?</label>
-        <input type="text" id="title">
-    </div>  
-    <br>
-    <div class="mb-2">
-        <label for="name">What is the artist's name?</label>
-        <input type="text" id="name">
-    </div>
-    <br>
-    <div class="mb-2">
-        <label for="year">What year was this song released?</label>
-        <input type="number" id="year">
-    </div>
-    <br>
-    <button class="btn btn-danger" id="submit" type="submit">Guess that Groove!</button>
-    <label for="submit"></label>
-</form>
+<div class="guessing-section">
 
-<div style="border: 3px solid red;" class="m-4 p-4">
-    <p id="attempts">{{attempts}}</p>
-    <p id="titleGuess">{{guesses.title}}</p>
-    <p id="artistGuess">{{guesses.artist}}</p>
-    <p id="yearGuess">{{guesses.year}}</p>
-    <p id="score">{{score}}</p>
+    <form onsubmit="calculateScore(event)" class="m-4 p-4 guess-form form-box">
+        <div class="mb-2">
+            <label for="title">🎼 What is the song's title?</label>
+            <input type="text" id="title" placeholder="Enter song title">
+        </div>  
+        <div class="mb-2">
+            <label for="artist">🧑‍🎤 What is the artist's name?</label>
+            <input type="text" id="artist" placeholder="Enter artist name">
+        </div>
+        <br>
+        <div class="mb-2">
+            <label for="year">📅 What year was this song released?</label>
+            <input type="text" id="year" placeholder="Enter release year">
+        </div>
+        <button class="action-btn" id="submit" type="submit">🎯 Guess that Groove!</button>
+        <label for="submit"></label>
+    </form>
+
+    <div class="m-4 p-4 guess-results">
+        <p id="attempts">{{attempts}}</p>
+        <p id="titleGuess">{{guesses.title}}</p>
+        <p id="artistGuess">{{guesses.artist}}</p>
+        <p id="yearGuess">{{guesses.year}}</p>
+        <p id="score">{{score}}</p>
+    </div>
+
 </div>
+
+<a href="{% url 'game' %}" class="start-btn">🚀 Start Another Game</a>
+
 
 <script>
     const audioPlayer = document.getElementById("audio-player")
     const audioSource = document.getElementById('audio-source')
     audioPlayer.style.display = "none"
 
-    let label = document.querySelector("label")
-
     const song = {
-        title: "{{ song.title|escapejs }}",
+        title:  "{{ song.title|escapejs }}",
         artist: "{{ song.artist|escapejs }}",
-        year: "{{ song.year|escapejs }}",
-        album: "{{ song.album|escapejs}}",
-        path: "{{ song.path|escapejs }}"
+        year:   "{{ song.year|escapejs }}",
+        album:  "{{ song.album|escapejs}}",
+        path:   "{{ song.path|escapejs }}"
     };
     song.year = parseInt(song.year, 10)
 
@@ -76,11 +87,12 @@
         pauseAudio()
     }
     let time = 5
+    
 
     audioPlayer.addEventListener("timeupdate", function () {
         if (audioPlayer.currentTime >= time) {
             audioPlayer.pause();  // Stop at 10 seconds
-            audioPlayer.currentTime = 0;  // Reset to the beginning
+            audioPlayer.currentTime = 15;  // Reset to the beginning
         }
     });
 
@@ -88,26 +100,22 @@
     function playAudio() {audioPlayer.play()}
     function pauseAudio() {audioPlayer.pause()}
     function stopAudio() {
-        audioPlayer.pause()
+             audioPlayer.pause()
+    }
+    function restartAudio() {
+             audioPlayer.currentTime = 15
     }
 
-    function restartAudio() {
-        audioPlayer.currentTime = 0
-    }
 
     let guessed = false
 
-    let guesses = {
-        title: false,
-        artist: false,
-        year: false
-    }
+
 
     let multipliers = {
-        title: [1.25, 1.15, 1.1, 1],
-        artist: [1.2, 1.1, 1.05, 1],
-        year: [1.5, 1.4, 1.3, 1],
-        bonus: [1.2, 1.15, 1.1, 1]
+        title:  [1.25, 1.15, 1.1, 1],
+        artist:  [1.2, 1.1, 1.05, 1],
+        year:     [1.5, 1.4, 1.3, 1],
+        bonus:   [1.2, 1.15, 1.1, 1]
     }
     let roundGuessed = {
         title: 1,
@@ -115,31 +123,56 @@
         year: 1
     }
     let attempts = 0;
-    
+    let score = document.getElementById("score");
 
     let tG = document.getElementById("titleGuess")
     let aG = document.getElementById("artistGuess")
     let yG = document.getElementById("yearGuess")
+
+    
+    let guesses = {
+        title: false,
+        artist: false,
+        year: false
+    }
+
     
     function checkAnswers(event) {
-        attempts++;
+        
         event.preventDefault()
 
+        console.log(tG)
+        console.log(aG)
+        console.log(yG)
+
         let formData = {
-            titleGuess: document.getElementById("title").value,
+            titleGuess: document.getElementById("title"),
             artistGuess: document.getElementById("artist"),
-            yearGuess: document.getElementById("year").value
+            yearGuess: document.getElementById("year")
         }
+        console.log(formData.titleGuess.value)
 
-        guesses.title = transformMe(String(formData.titleGuess)) == transformMe(String(song.title))
-        guesses.artist = transformMe(String(formData.artistGuess)) == transformMe(String(song.artist))
-        guesses.year = formData.yearGuess == song.year
-
+        if(formData.titleGuess.value == song.title)
+        {
+            tG.textContent = "You've guessed the title correctly!"
+            guesses.title = true;
+        } 
+        else tG.textContent = "Try guessing the title again!"
         
-
-        tG.textContent = guesses.title
-        aG.textContent = guesses.artist
-        yG.textContent = guesses.year
+        if(formData.artistGuess.value == song.artist)
+        {
+            aG.textContent = "You've guessed the artist correctly!"
+            guesses.artist = true;
+        } 
+        else aG.textContent = "Try guessing the artist again!"
+        
+        if(formData.yearGuess.value == song.year)
+        {
+            yG.textContent = "You've guessed the year correctly!"
+            guesses.year = true;
+        } 
+        else yG.textContent = "Try guessing the year again!"
+        
 
         time += 5
         if (guesses.title == false) roundGuessed.title += 1
@@ -149,22 +182,46 @@
     
     function calculateScore(event)
     {
-        if (attempts < 3)
+        if (attempts < 2)
         {
             checkAnswers(event)
         }
-        else
+        else if (attempts == 2)
         {
-            let nameM = multipliers.title[roundGuessed.title];
-            let artistM = multipliers.artist[roundGuessed.artist];;
-            let yearM = multipliers.year[roundGuessed.year];
-            let bonusM = 1;
-            let finalMultiplier = (nameM * bonusM) * (artistM * bonusM) * (yearM * bonusM);
-            let score = 1000 * finalMultiplier;
+            checkAnswers(event)
+            //event.preventDefault()
+            if(guesses.title || guesses.artist || guesses.year)
+            {
+                //let nameM = multipliers.title[roundGuessed.title];
+                //let artistM = multipliers.artist[roundGuessed.artist];;
+                //let yearM = multipliers.year[roundGuessed.year];
 
-            round_data = {
-                'score': score
+                let titleIndex = Math.min(roundGuessed.title, multipliers.title.length - 1);
+                let titleM = multipliers.title[titleIndex];
+                
+                let artistIndex = Math.min(roundGuessed.artist, multipliers.artist.length - 1);
+                let artistM = multipliers.title[artistIndex];
+                
+                let yearIndex = Math.min(roundGuessed.year, multipliers.year.length - 1);
+                let yearM = multipliers.title[yearIndex];
+
+                let bonusM = 1;
+                let finalMultiplier = (titleM * bonusM) * (artistM * bonusM) * (yearM * bonusM);
+                score.textContent = String("Your score is: " + (1000 * finalMultiplier).toFixed(2));    
+                
+                round_data = {
+                    'score': parseInt(Math.floor(1000 * finalMultiplier))
+                }
             }
+            else
+            {
+                score.textContent = String("Your score is " + 0);
+
+                round_data = {
+                    'score': 0
+                }
+            }
+
 
             fetch("{% url 'add_round' %}", {
                 method: "POST",
@@ -178,10 +235,10 @@
                 console.log("Response Object:", response)
                 return response.clone().text()
             })
-            .then(rawText => {
-                console.log("Raw Response Text:", rawText)
-                return JSON.parse(rawText)
-            })
+            // .then(rawText => {
+            //     console.log("Raw Response Text:", rawText)
+            //     return JSON.parse(rawText)
+            // })
             .then(data => {
                 console.log("Data:", data)
                 console.log("success?:", data.success)
@@ -194,40 +251,19 @@
                     console.log("Found:", data.message)
                 }
             })
+            
+            attempts++;
         }
-    }
-
-
-    function transformMe(me) {
-        let new_me = me.trim()
-
-        const punctuation = ['!', ',', '\'', '/', '.', '?', '-']
-        for(let i = 0; i < punctuation.length; i++) {
-            new_me.replace(punctuation[i], '')
+        else{
+            
         }
-
-        return new_me
+        attempts++;
+        
     }
     
 
 </script>
 
 
-
-{% if playerName %}
-    <p>Hello, <strong>{{ playerName }}</strong>!</p>
-{% elif username != '' %}
-    <p>Hello {{ username }}!</p>
-{% else %}
-    <p>This is a practice game.</p>
-{% endif %}
-
-<p>Learn more about GrooveGuesser <a href="{% url 'about' %}">HERE!</a></p>
-
-<p>If you want to log into your account, or create a new account,  
-    click <a href="{% url 'user.signup' %}">HERE!</a>.</p>
-
-<!-- The Start Game Button -->
-<a href="{% url 'game' %}" class="start-btn">Start Game</a>
 
 {% endblock content %}
