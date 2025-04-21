@@ -90,6 +90,8 @@
         category: "{{ song.category|escapejs}}"
     };
     song.year = parseInt(song.year, 10)
+    song.artist = song.artist.trim().toLowerCase()
+    song.title = song.title.trim().toLowerCase()
 
     console.log(song); // Now you can access song data in JavaScript
 
@@ -162,6 +164,17 @@
             yearGuess: document.getElementById("year")
         }
         console.log(formData.titleGuess.value)
+
+        const artistGuess = formData.artistGuess.value.trim().toLowerCase();
+        const correctArtist = song.artist.trim().toLowerCase();
+        console.log("Artist Guess: '" + artistGuess + "'");
+        console.log("Correct Artist: '" + correctArtist + "'");
+
+        guesses.title = formData.titleGuess.value.toLowerCase() === song.title.toLowerCase();
+        guesses.artist = artistGuess === correctArtist;
+        guesses.year = parseInt(formData.yearGuess.value, 10) === song.year;
+
+
 
         if(formData.titleGuess.value == song.title)
         {
