@@ -40,19 +40,20 @@
         </div>
 
         <!-- Practice Toggle -->
-        <div style="text-align: center; margin-top: 30px;">
+        <!-- <div style="text-align: center; margin-top: 30px;">
             <label for="practice" style="font-size: 1.3rem; color: #fff;">🎯 Practice Mode:</label>
             <input type="checkbox" id="practice" name="data" value="p" style="transform: scale(1.5); margin-left: 10px;">
-        </div>
+        </div> -->
+
 
         <!-- Navigation -->
-        <div style="text-align: center; margin-top: 30px;">
+        <div class="mt-5 pt-5 text-center">
             <a href="{% url 'index' %}" class="action-btn">🏠 Back to Home</a>
         </div>
     </form>
 
     {% if practice %}
-        <p style="margin-top: 20px; font-size: 1.2rem; color: #fff;">🎓 You're in practice mode! No pressure, just vibes.</p>
+        <p style="font-size: 1.2rem; color: #fff;" class="mt-2">🎓 You're in practice mode! No pressure, just vibes.</p>
     {% endif %}
 </div>
 {% endblock content %}

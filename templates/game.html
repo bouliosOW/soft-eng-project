@@ -170,20 +170,29 @@
         console.log("Artist Guess: '" + artistGuess + "'");
         console.log("Correct Artist: '" + correctArtist + "'");
 
+        const titleGuess = formData.titleGuess.value.trim().toLowerCase();
+        const correctTitle = song.title.trim().toLowerCase();
+        console.log("correct and guess titles", correctTitle == titleGuess)
+        console.log(correctTitle)
+        console.log(titleGuess)
+
+        // const yearGuess = formData.yearGuess.value.trim().toLowerCase();
+        // const correctYear = song.year.trim().toLowerCase();
+
         guesses.title = formData.titleGuess.value.toLowerCase() === song.title.toLowerCase();
         guesses.artist = artistGuess === correctArtist;
         guesses.year = parseInt(formData.yearGuess.value, 10) === song.year;
 
 
 
-        if(formData.titleGuess.value == song.title)
+        if(formData.titleGuess.value == song.title || correctTitle == titleGuess)
         {
             tG.textContent = "You've guessed the title correctly!"
             guesses.title = true;
         } 
         else tG.textContent = "Try guessing the title again!"
         
-        if(formData.artistGuess.value == song.artist)
+        if(formData.artistGuess.value == song.artist || correctArtist == artistGuess)
         {
             aG.textContent = "You've guessed the artist correctly!"
             guesses.artist = true;
